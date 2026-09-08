@@ -23,30 +23,42 @@
         .header {
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             border-radius: 30px;
-            padding: 30px 40px;
+            padding: 25px 40px;
             color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             box-shadow: 0 15px 40px rgba(106, 17, 203, 0.3);
-            margin-bottom: 40px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '🧙‍♂️';
+            position: absolute;
+            right: -20px;
+            top: -20px;
+            font-size: 8rem;
+            opacity: 0.1;
         }
 
         .header h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
+            z-index: 1;
         }
 
         .header h1 span {
-            font-size: 3rem;
+            font-size: 2.8rem;
         }
 
         .header .logo-sub {
-            font-size: 0.9rem;
-            opacity: 0.8;
+            font-size: 0.85rem;
+            opacity: 0.9;
             display: block;
             font-weight: normal;
         }
@@ -54,19 +66,44 @@
         .header .score-box {
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
-            padding: 15px 30px;
+            padding: 12px 25px;
             border-radius: 20px;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: bold;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             border: 2px solid rgba(255, 255, 255, 0.3);
+            z-index: 1;
         }
 
         .header .score-box .star {
             color: #ffd700;
-            font-size: 2rem;
+            font-size: 1.8rem;
+        }
+
+        /* ===== BACK BUTTON ===== */
+        .back-btn {
+            display: none;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .back-btn:hover {
+            background: white;
+            color: #6a11cb;
+        }
+
+        .back-btn.show {
+            display: inline-block;
         }
 
         /* ===== MAIN CONTENT ===== */
@@ -75,18 +112,18 @@
             margin: 0 auto;
         }
 
-        /* ===== LESSON CARDS ===== */
+        /* ===== LESSONS SECTION ===== */
         .lessons-section {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .lessons-section h2 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: #333;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         .lessons-grid {
@@ -98,7 +135,7 @@
         .lesson-card {
             background: white;
             border-radius: 25px;
-            padding: 30px 20px;
+            padding: 25px 20px;
             text-align: center;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
             cursor: pointer;
@@ -108,24 +145,8 @@
             overflow: hidden;
         }
 
-        .lesson-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            transition: all 0.5s ease;
-            opacity: 0;
-        }
-
-        .lesson-card:hover::before {
-            opacity: 1;
-        }
-
         .lesson-card:hover {
-            transform: translateY(-10px) scale(1.02);
+            transform: translateY(-8px) scale(1.02);
             box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
         }
 
@@ -137,29 +158,29 @@
         .lesson-card:nth-child(6) { border-color: #6C5CE7; }
 
         .lesson-card .icon {
-            font-size: 3.5rem;
-            margin-bottom: 10px;
+            font-size: 3rem;
+            margin-bottom: 8px;
             display: block;
         }
 
         .lesson-card h3 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #333;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .lesson-card p {
             color: #888;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .lesson-card .badge {
             display: inline-block;
             color: white;
-            padding: 3px 15px;
+            padding: 2px 14px;
             border-radius: 20px;
-            font-size: 0.7rem;
-            margin-top: 10px;
+            font-size: 0.65rem;
+            margin-top: 8px;
         }
 
         .lesson-card:nth-child(1) .badge { background: #FF6B6B; }
@@ -169,45 +190,187 @@
         .lesson-card:nth-child(5) .badge { background: #FF8A5C; }
         .lesson-card:nth-child(6) .badge { background: #6C5CE7; }
 
-        /* ===== GAME AREA ===== */
-        .game-section {
+        /* ===== LESSON DETAIL (آموزش کامل) ===== */
+        .lesson-detail {
+            display: none;
             background: white;
             border-radius: 30px;
             padding: 35px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-            margin-bottom: 40px;
+            margin-bottom: 30px;
+            animation: fadeIn 0.5s ease;
         }
 
-        .game-section h2 {
-            font-size: 2rem;
-            color: #333;
-            margin-bottom: 10px;
+        .lesson-detail.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .lesson-detail .detail-header {
             display: flex;
             align-items: center;
             gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #f0f0f0;
+        }
+
+        .lesson-detail .detail-header .big-icon {
+            font-size: 4rem;
+        }
+
+        .lesson-detail .detail-header h2 {
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .lesson-detail .detail-header .level-tag {
+            padding: 5px 18px;
+            border-radius: 20px;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .lesson-detail .detail-content {
+            line-height: 2;
+            color: #444;
+            font-size: 1.05rem;
+        }
+
+        .lesson-detail .detail-content h3 {
+            color: #6a11cb;
+            margin-top: 20px;
+            margin-bottom: 8px;
+            font-size: 1.3rem;
+        }
+
+        .lesson-detail .detail-content ul {
+            padding-right: 25px;
+            margin: 10px 0;
+        }
+
+        .lesson-detail .detail-content ul li {
+            margin-bottom: 6px;
+        }
+
+        .lesson-detail .detail-content .code-box {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px;
+            border-radius: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            direction: ltr;
+            text-align: left;
+            margin: 15px 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.8;
+        }
+
+        .lesson-detail .detail-content .code-box .comment {
+            color: #6c7086;
+        }
+
+        .lesson-detail .detail-content .code-box .keyword {
+            color: #cba6f7;
+        }
+
+        .lesson-detail .detail-content .code-box .string {
+            color: #a6e3a1;
+        }
+
+        .lesson-detail .detail-content .code-box .function {
+            color: #89b4fa;
+        }
+
+        .lesson-detail .detail-content .tip-box {
+            background: #fff3cd;
+            border-right: 5px solid #ffc107;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .lesson-detail .detail-content .tip-box strong {
+            color: #856404;
+        }
+
+        .lesson-detail .detail-content .example-box {
+            background: #e8f5e9;
+            border-right: 5px solid #4CAF50;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .lesson-detail .detail-content .example-box strong {
+            color: #2E7D32;
+        }
+
+        .start-game-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 35px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-game-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(106, 17, 203, 0.4);
+        }
+
+        /* ===== GAME AREA ===== */
+        .game-section {
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .game-section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .game-section .subtitle {
             color: #888;
-            margin-bottom: 25px;
-            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-size: 1rem;
         }
 
         .game-area {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 25px;
+            gap: 20px;
         }
 
         .game-question {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: bold;
             color: #333;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 20px 50px;
+            padding: 18px 40px;
             border-radius: 20px;
-            min-height: 100px;
+            min-height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -220,23 +383,22 @@
         .game-options {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
+            gap: 12px;
             width: 100%;
             max-width: 500px;
         }
 
         .game-options button {
-            padding: 20px;
-            font-size: 1.8rem;
+            padding: 18px;
+            font-size: 1.6rem;
             border: none;
-            border-radius: 20px;
+            border-radius: 18px;
             cursor: pointer;
             transition: all 0.2s ease;
             font-weight: bold;
             background: #f0f0f0;
             color: #333;
             box-shadow: 0 4px 0 #d0d0d0;
-            position: relative;
         }
 
         .game-options button:hover:not(:disabled) {
@@ -264,15 +426,15 @@
 
         .game-options button:disabled {
             cursor: not-allowed;
-            opacity: 0.7;
+            opacity: 0.6;
         }
 
         .game-feedback {
-            font-size: 1.5rem;
-            min-height: 60px;
+            font-size: 1.3rem;
+            min-height: 50px;
             font-weight: bold;
             text-align: center;
-            padding: 10px;
+            padding: 8px;
             border-radius: 15px;
             width: 100%;
             max-width: 500px;
@@ -282,8 +444,8 @@
         .game-feedback .wrong-text { color: #FF6B6B; }
 
         .next-btn {
-            padding: 15px 50px;
-            font-size: 1.2rem;
+            padding: 12px 45px;
+            font-size: 1.1rem;
             border: none;
             border-radius: 30px;
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
@@ -303,17 +465,17 @@
         .character-area {
             display: flex;
             justify-content: center;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .character {
-            font-size: 5rem;
+            font-size: 4.5rem;
             animation: float 3s ease-in-out infinite;
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             border-radius: 50%;
-            padding: 20px;
-            width: 120px;
-            height: 120px;
+            padding: 18px;
+            width: 110px;
+            height: 110px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -323,25 +485,27 @@
 
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-12px); }
         }
 
-        /* ===== TOAST NOTIFICATION ===== */
+        /* ===== TOAST ===== */
         .toast {
             position: fixed;
-            bottom: 30px;
+            bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             color: white;
-            padding: 15px 30px;
+            padding: 12px 28px;
             border-radius: 30px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             opacity: 0;
             transition: all 0.5s ease;
             pointer-events: none;
             z-index: 1000;
             backdrop-filter: blur(10px);
+            max-width: 90%;
+            text-align: center;
         }
 
         .toast.show {
@@ -354,13 +518,22 @@
             .header {
                 flex-direction: column;
                 text-align: center;
-                gap: 15px;
-                padding: 20px;
+                gap: 12px;
+                padding: 18px;
             }
 
             .header h1 {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
                 justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .header h1 span {
+                font-size: 2rem;
+            }
+
+            .header .logo-sub {
+                font-size: 0.7rem;
             }
 
             .game-options {
@@ -368,41 +541,52 @@
             }
 
             .game-question {
-                font-size: 1.8rem;
-                padding: 15px 25px;
-                min-height: 80px;
+                font-size: 1.6rem;
+                padding: 12px 20px;
+                min-height: 70px;
             }
 
             .lessons-grid {
-                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             }
 
             .character {
-                width: 80px;
-                height: 80px;
-                font-size: 3.5rem;
+                width: 70px;
+                height: 70px;
+                font-size: 3rem;
+            }
+
+            .lesson-detail {
+                padding: 20px;
+            }
+
+            .lesson-detail .detail-header h2 {
+                font-size: 1.3rem;
             }
         }
 
         @media (max-width: 480px) {
             .header h1 {
-                font-size: 1.4rem;
+                font-size: 1.2rem;
             }
             .header .score-box {
-                font-size: 1rem;
-                padding: 10px 20px;
+                font-size: 0.9rem;
+                padding: 8px 16px;
             }
             .game-options button {
-                font-size: 1.3rem;
-                padding: 15px;
+                font-size: 1.2rem;
+                padding: 12px;
             }
             .game-section {
-                padding: 20px;
+                padding: 16px;
+            }
+            .lesson-card {
+                padding: 18px 12px;
+            }
+            .lesson-card .icon {
+                font-size: 2.2rem;
             }
         }
-
-        /* ===== FONT ===== */
-        @import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
     </style>
 </head>
 <body>
@@ -414,52 +598,55 @@
 
         <!-- ===== HEADER ===== -->
         <header class="header">
-            <h1>
-                <span>🧙‍♂️</span>
-                کدیار
-                <span class="logo-sub">یار برنامه‌نویسی کودکان</span>
-            </h1>
+            <div style="display:flex;align-items:center;gap:15px;flex-wrap:wrap;z-index:1;">
+                <h1>
+                    <span>🧙‍♂️</span>
+                    کدیار
+                    <span class="logo-sub">یار برنامه‌نویسی کودکان</span>
+                </h1>
+                <button class="back-btn" id="backBtn" onclick="showHome()">🏠 بازگشت به صفحه اصلی</button>
+            </div>
             <div class="score-box">
                 <span class="star">⭐</span>
                 امتیاز: <span id="scoreDisplay">۰</span>
             </div>
         </header>
 
-        <!-- ===== LESSONS SECTION ===== -->
-        <section class="lessons-section">
+        <!-- ===== LESSONS SECTION (HOME) ===== -->
+        <section class="lessons-section" id="homeSection">
             <h2>📚 دوره‌های آموزشی کدیار</h2>
             <div class="lessons-grid">
-                <div class="lesson-card" onclick="showToast('🧩 شروع ماجرای اسکرچ! بیا با بلوک‌ها بازی کنیم')">
+                <div class="lesson-card" onclick="showLesson('scratch')">
                     <span class="icon">🧩</span>
                     <h3>اسکرچ جادویی</h3>
                     <p>ساخت بازی با بلوک‌ها</p>
                     <span class="badge">مبتدی</span>
                 </div>
-                <div class="lesson-card" onclick="showToast('🐍 پایتون کوچولو منتظرته! بیا کدنویسی رو شروع کن')">
+                <div class="lesson-card" onclick="showLesson('python')">
                     <span class="icon">🐍</span>
                     <h3>پایتون بازیگوش</h3>
                     <p>کدنویسی با پایتون</p>
                     <span class="badge">متوسط</span>
                 </div>
-                <div class="lesson-card" onclick="showToast('🌐 وب‌ساز کوچک! با HTML و CSS سایت بساز')">
+                <div class="lesson-card" onclick="showLesson('web')">
                     <span class="icon">🌐</span>
                     <h3>ساخت وب‌سایت</h3>
                     <p>HTML و CSS</p>
                     <span class="badge">متوسط</span>
                 </div>
-                <div class="lesson-card" onclick="showToast('🤖 ربات بازیگوش! الگوریتم‌های باحال یاد بگیر')">
+                <div class="lesson-card" onclick="showLesson('algorithm')">
                     <span class="icon">🤖</span>
                     <h3>ربات‌سازی</h3>
                     <p>الگوریتم و منطق</p>
                     <span class="badge">پیشرفته</span>
                 </div>
-                <div class="lesson-card" onclick="showToast('🎮 ساخت بازی! با جاوااسکریپت بازی‌های جذاب بساز')">
+                <div class="lesson-card" onclick="showLesson('game')">
                     <span class="icon">🎮</span>
                     <h3>بازی‌سازی</h3>
                     <p>با جاوااسکریپت</p>
                     <span class="badge">پیشرفته</span>
                 </div>
-                <div class="lesson-card" onclick="showToast('💡 هوش مصنوعی! ماشین‌ها رو باهوش کن')">
+                <div class="lesson-card" onclick="showLesson('ai')">
                     <span class="icon">💡</span>
                     <h3>هوش مصنوعی</h3>
                     <p>یادگیری ماشین</p>
@@ -468,8 +655,22 @@
             </div>
         </section>
 
+        <!-- ===== LESSON DETAIL ===== -->
+        <div class="lesson-detail" id="lessonDetail">
+            <div class="detail-header">
+                <span class="big-icon" id="detailIcon">🧩</span>
+                <div>
+                    <h2 id="detailTitle">اسکرچ جادویی</h2>
+                    <span class="level-tag" id="detailLevel" style="background:#FF6B6B;">مبتدی</span>
+                </div>
+            </div>
+            <div class="detail-content" id="detailContent">
+                <!-- محتوا توسط جاوااسکریپت پر میشه -->
+            </div>
+        </div>
+
         <!-- ===== GAME SECTION ===== -->
-        <section class="game-section">
+        <section class="game-section" id="gameSection">
             <h2>🎯 بازی کدنویسی کدیار</h2>
             <p class="subtitle">به سوالات پاسخ بده و امتیاز جمع کن! 🏆</p>
 
@@ -499,7 +700,276 @@
     </div>
 
     <script>
-        // ===== DATA =====
+        // ===== LESSON DATA (آموزش‌های کامل) =====
+        const lessonsData = {
+            scratch: {
+                icon: '🧩',
+                title: 'اسکرچ جادویی',
+                level: 'مبتدی',
+                levelColor: '#FF6B6B',
+                content: `
+                    <h3>🎯 اسکرچ چیه؟</h3>
+                    <p>اسکرچ یه زبان برنامه‌نویسی <strong>تصویری</strong> و <strong>بلوکی</strong> هست که توسط MIT ساخته شده. توی اسکرچ به جای تایپ کردن کد، بلوک‌های رنگی رو مثل پازل کنار هم می‌چینیم تا بازی و انیمیشن بسازیم!</p>
+
+                    <div class="example-box">
+                        <strong>✨ اولین قدم:</strong> به سایت scratch.mit.edu برو و روی «Create» کلیک کن. یه محیط رنگی و پر از بلوک می‌بینی!
+                    </div>
+
+                    <h3>🧱 بلوک‌های اصلی اسکرچ</h3>
+                    <ul>
+                        <li><strong>حرکت (Motion):</strong> برای حرکت دادن شخصیت‌ها — مثل «۱۰ قدم حرکت کن»</li>
+                        <li><strong>ظاهر (Looks):</strong> برای تغییر شکل یا گفتن جمله — مثل «سلام بگو»</li>
+                        <li><strong>صدا (Sound):</strong> برای پخش موسیقی و صدا</li>
+                        <li><strong>کنترل (Control):</strong> برای تکرار و شرط‌ها — مثل «اگر» و «برای همیشه»</li>
+                        <li><strong>حسگر (Sensing):</strong> برای تشخیص برخورد یا کلیک ماوس</li>
+                    </ul>
+
+                    <h3>🎮 ساخت یه بازی ساده</h3>
+                    <ol>
+                        <li>یک <strong>گربه</strong> (اسپرایت) رو به صحنه اضافه کن</li>
+                        <li>از بلوک <strong>«وقتی پرچم سبز کلیک شد»</strong> استفاده کن</li>
+                        <li>بلوک <strong>«برای همیشه»</strong> رو اضافه کن</li>
+                        <li>توی حلقه، بلوک <strong>«۱۰ قدم حرکت کن»</strong> و <strong>«اگر لبه رسید، برگرد»</strong> رو بذار</li>
+                        <li>حالا پرچم سبز رو بزن! 🎉 گربه راه می‌افته!</li>
+                    </ol>
+
+                    <div class="tip-box">
+                        <strong>💡 نکته جادویی:</strong> می‌تونی با کلیک روی گربه، رنگش رو عوض کنی یا بهش بگی «میو» بگه!
+                    </div>
+
+                    <h3>📚 منبع یادگیری بیشتر</h3>
+                    <p>برای آموزش‌های بیشتر، به <a href="https://scratch.mit.edu" target="_blank">سایت رسمی اسکرچ</a> سر بزن و پروژه‌های دیگران رو ببین!</p>
+
+                    <button class="start-game-btn" onclick="scrollToGame()">🎯 برو به بازی کدیار</button>
+                `
+            },
+            python: {
+                icon: '🐍',
+                title: 'پایتون بازیگوش',
+                level: 'متوسط',
+                levelColor: '#4ECDC4',
+                content: `
+                    <h3>🐍 پایتون چیه؟</h3>
+                    <p>پایتون یه زبان برنامه‌نویسی <strong>متنی</strong> و <strong>ساده</strong> هست که خیلی از برنامه‌نویس‌های بزرگ ازش استفاده می‌کنن! پایتون مثل یه مار بازیگوشه که بهت کمک می‌کنه بازی، وب‌سایت و حتی ربات بسازی!</p>
+
+                    <h3>📝 اولین کد پایتون</h3>
+                    <p>اولین کاری که توی پایتون یاد می‌گیری، چاپ کردن جمله است:</p>
+                    <div class="code-box">
+                        <span class="comment"># این اولین برنامه منه!</span>
+                        <span class="keyword">print</span>(<span class="string">"سلام کدیار! 🧙‍♂️"</span>)
+                    </div>
+                    <p>کد بالا رو توی محیط پایتون بنویس و اجرا کن تا جمله رو ببینی!</p>
+
+                    <h3>🔢 متغیرها و ریاضی</h3>
+                    <p>توی پایتون می‌تونی عددها رو توی متغیر ذخیره کنی:</p>
+                    <div class="code-box">
+                        <span class="keyword">x</span> = <span class="string">۵</span>
+                        <span class="keyword">y</span> = <span class="string">۳</span>
+                        <span class="keyword">print</span>(x + y)  <span class="comment"># چاپ می‌کنه: ۸</span>
+                    </div>
+
+                    <h3>🔄 شرط و حلقه</h3>
+                    <p>با <strong>if</strong> می‌تونی تصمیم‌گیری کنی و با <strong>for</strong> کارها رو تکرار کنی:</p>
+                    <div class="code-box">
+                        <span class="keyword">age</span> = <span class="string">۱۰</span>
+                        <span class="keyword">if</span> age >= <span class="string">۱۰</span>:
+                            <span class="keyword">print</span>(<span class="string">"تو می‌تونی کدنویسی کنی! 🚀"</span>)
+                        <span class="keyword">else</span>:
+                            <span class="keyword">print</span>(<span class="string">"کمی صبر کن، به زودی یاد می‌گیری! 🌱"</span>)
+                    </div>
+
+                    <div class="tip-box">
+                        <strong>💡 نکته:</strong> توی پایتون، <strong>فاصله (ایندنت)</strong> خیلی مهمه! یعنی کدهایی که توی شرط هستن باید با ۴ تا فاصله (Tab) شروع بشن.
+                    </div>
+
+                    <h3>🎯 تمرین</h3>
+                    <p>یک برنامه بنویس که از کاربر اسمش رو بپرسه و بهش خوش‌آمد بگه! (از <strong>input()</strong> استفاده کن)</p>
+
+                    <button class="start-game-btn" onclick="scrollToGame()">🎯 برو به بازی کدیار</button>
+                `
+            },
+            web: {
+                icon: '🌐',
+                title: 'ساخت وب‌سایت',
+                level: 'متوسط',
+                levelColor: '#FFA94D',
+                content: `
+                    <h3>🌐 وب‌سایت چیه؟</h3>
+                    <p>وب‌سایت‌ها از سه تا زبون اصلی ساخته میشن: <strong>HTML</strong> (ساختار)، <strong>CSS</strong> (قشنگ‌سازی) و <strong>JavaScript</strong> (حرکت و تعامل).</p>
+
+                    <h3>📄 HTML — اسکلت وب‌سایت</h3>
+                    <p>HTML مثل اسکلت ساختمونه. با تگ‌ها (برچسب‌ها) کار می‌کنه:</p>
+                    <div class="code-box">
+                        &lt;!DOCTYPE html&gt;
+                        &lt;html&gt;
+                        &lt;head&gt;
+                            &lt;title&gt;کدیار&lt;/title&gt;
+                        &lt;/head&gt;
+                        &lt;body&gt;
+                            &lt;h1&gt;سلام کدیار! 🧙‍♂️&lt;/h1&gt;
+                            &lt;p&gt;این اولین وب‌سایت منه!&lt;/p&gt;
+                        &lt;/body&gt;
+                        &lt;/html&gt;
+                    </div>
+
+                    <h3>🎨 CSS — رنگ و زیبایی</h3>
+                    <p>CSS به وب‌سایت رنگ و قیافه می‌ده:</p>
+                    <div class="code-box">
+                        <span class="keyword">h1</span> {
+                            <span class="keyword">color</span>: <span class="string">#6a11cb</span>;
+                            <span class="keyword">font-size</span>: <span class="string">40px</span>;
+                            <span class="keyword">text-align</span>: <span class="string">center</span>;
+                        }
+                    </div>
+
+                    <h3>⚡ جاوااسکریپت — جان دادن به سایت</h3>
+                    <p>با جاوااسکریپت می‌تونی به دکمه‌ها عکس‌العمل بدی:</p>
+                    <div class="code-box">
+                        &lt;button onclick="<span class="function">alert</span>(<span class="string">'سلام کدیار!'</span>)"&gt;
+                            کلیک کن!
+                        &lt;/button&gt;
+                    </div>
+
+                    <div class="example-box">
+                        <strong>✨ پروژه باحال:</strong> یک صفحه بساز که با کلیک روی دکمه، رنگ پس‌زمینه عوض بشه!
+                    </div>
+
+                    <button class="start-game-btn" onclick="scrollToGame()">🎯 برو به بازی کدیار</button>
+                `
+            },
+            algorithm: {
+                icon: '🤖',
+                title: 'ربات‌سازی و الگوریتم',
+                level: 'پیشرفته',
+                levelColor: '#A8E6CF',
+                content: `
+                    <h3>🤖 الگوریتم چیه؟</h3>
+                    <p>الگوریتم یعنی یه <strong>دستورالعمل گام‌به‌گام</strong> برای حل یه مسئله. مثل دستور پخت کیک! ربات‌ها با الگوریتم کار می‌کنن.</p>
+
+                    <h3>📝 الگوریتم ساده: صبحانه خوردن!</h3>
+                    <ol>
+                        <li>بلند شو</li>
+                        <li>برو به آشپزخانه</li>
+                        <li>نون رو از یخچال بردار</li>
+                        <li>نون رو تو توستر بذار</li>
+                        <li>صبر کن تا نون برشته بشه</li>
+                        <li>نون رو بردار و با پنیر بخور!</li>
+                    </ol>
+
+                    <h3>🔀 شرط در الگوریتم</h3>
+                    <p>بعضی وقت‌ها باید تصمیم بگیریم:</p>
+                    <div class="code-box">
+                        <span class="keyword">اگر</span> (بارون میاد) {
+                            چتر بردار
+                        } <span class="keyword">در غیر این صورت</span> {
+                            عینک آفتابی بذار
+                        }
+                    </div>
+
+                    <h3>🔄 حلقه در الگوریتم</h3>
+                    <p>بعضی کارها رو باید تکرار کنیم:</p>
+                    <div class="code-box">
+                        <span class="keyword">تکرار کن ۱۰ بار</span> {
+                            یه قدم برو جلو
+                        }
+                    </div>
+
+                    <div class="tip-box">
+                        <strong>💡 تمرین:</strong> یه الگوریتم برای «درست کردن ساندویچ» بنویس! هر قدم رو دقیق مشخص کن.
+                    </div>
+
+                    <button class="start-game-btn" onclick="scrollToGame()">🎯 برو به بازی کدیار</button>
+                `
+            },
+            game: {
+                icon: '🎮',
+                title: 'بازی‌سازی با جاوااسکریپت',
+                level: 'پیشرفته',
+                levelColor: '#FF8A5C',
+                content: `
+                    <h3>🎮 بازی‌سازی چیه؟</h3>
+                    <p>با جاوااسکریپت و HTML می‌تونی بازی‌های تعاملی بسازی! اینجا یه بازی ساده «حدس عدد» رو یاد می‌گیری.</p>
+
+                    <h3>🎯 بازی حدس عدد</h3>
+                    <p>یک عدد تصادفی بین ۱ تا ۱۰۰ انتخاب می‌شه و تو باید حدس بزنی!</p>
+
+                    <div class="code-box">
+                        <span class="comment">// عدد تصادفی بساز</span>
+                        <span class="keyword">let</span> secretNumber = Math.<span class="function">floor</span>(Math.<span class="function">random</span>() * <span class="string">100</span>) + <span class="string">1</span>;
+                        <span class="keyword">let</span> guess = <span class="string">۰</span>;
+
+                        <span class="keyword">function</span> <span class="function">checkGuess</span>() {
+                            guess = <span class="function">parseInt</span>(<span class="function">document</span>.<span class="function">getElementById</span>(<span class="string">'guessInput'</span>).value);
+                            <span class="keyword">if</span> (guess === secretNumber) {
+                                <span class="function">alert</span>(<span class="string">'🎉 آفرین! درست حدس زدی!'</span>);
+                            } <span class="keyword">else if</span> (guess < secretNumber) {
+                                <span class="function">alert</span>(<span class="string">'📈 برو بالاتر!'</span>);
+                            } <span class="keyword">else</span> {
+                                <span class="function">alert</span>(<span class="string">'📉 برو پایین‌تر!'</span>);
+                            }
+                        }
+                    </div>
+
+                    <div class="example-box">
+                        <strong>🎮 پروژه:</strong> یک بازی «حدس عدد» با HTML و جاوااسکریپت بساز که بهت بگه عدد رو بالاتر یا پایین‌تر بزنی!
+                    </div>
+
+                    <h3>🕹️ حرکت با کیبورد</h3>
+                    <p>می‌تونی با کلیدهای بالا و پایین یه شخصیت رو حرکت بدی:</p>
+                    <div class="code-box">
+                        <span class="function">document</span>.<span class="function">addEventListener</span>(<span class="string">'keydown'</span>, <span class="keyword">function</span>(event) {
+                            <span class="keyword">if</span> (event.key === <span class="string">'ArrowUp'</span>) {
+                                <span class="comment">// حرکت به بالا</span>
+                            }
+                        });
+                    </div>
+
+                    <button class="start-game-btn" onclick="scrollToGame()">🎯 برو به بازی کدیار</button>
+                `
+            },
+            ai: {
+                icon: '💡',
+                title: 'هوش مصنوعی',
+                level: 'حرفه‌ای',
+                levelColor: '#6C5CE7',
+                content: `
+                    <h3>💡 هوش مصنوعی چیه؟</h3>
+                    <p>هوش مصنوعی (AI) یعنی ماشین‌ها رو <strong>باهوش</strong> کنیم! مثلاً به کامپیوتر یاد بدیم تصویر رو تشخیص بده یا با ما حرف بزنه.</p>
+
+                    <h3>🧠 یادگیری ماشین چیه؟</h3>
+                    <p>به جای اینکه به کامپیوتر دقیقاً بگیم چیکار کنه، بهش <strong>داده</strong> می‌دیم و خودش یاد می‌گیره! مثل اینه که به یه بچه کلی عکس گربه نشون بدی تا خودش تشخیص بده گربه چیه.</p>
+
+                    <h3>📊 سه نوع یادگیری ماشین</h3>
+                    <ul>
+                        <li><strong>یادگیری با نظارت (Supervised):</strong> به کامپیوتر داده + جواب درست می‌دیم تا یاد بگیره</li>
+                        <li><strong>یادگیری بدون نظارت (Unsupervised):</strong> فقط داده می‌دیم و خودش الگوها رو پیدا می‌کنه</li>
+                        <li><strong>یادگیری تقویتی (Reinforcement):</strong> با جایزه و تنبیه یاد می‌گیره — مثل بازی کردن!</li>
+                    </ul>
+
+                    <h3>🤖 چت‌بات ساده</h3>
+                    <p>با جاوااسکریپت می‌تونی یه چت‌بات ساده بسازی:</p>
+                    <div class="code-box">
+                        <span class="keyword">function</span> <span class="function">getReply</span>(message) {
+                            <span class="keyword">if</span> (message.<span class="function">includes</span>(<span class="string">"سلام"</span>)) {
+                                <span class="keyword">return</span> <span class="string">"سلام کدیار! 😊"</span>;
+                            } <span class="keyword">else if</span> (message.<span class="function">includes</span>(<span class="string">"اسمت چیه"</span>)) {
+                                <span class="keyword">return</span> <span class="string">"اسم من کدیاره! 🧙‍♂️"</span>;
+                            } <span class="keyword">else</span> {
+                                <span class="keyword">return</span> <span class="string">"چیز جالبی یادم نیست 😅"</span>;
+                            }
+                        }
+                    </div>
+
+                    <div class="tip-box">
+                        <strong>💡 آینده شغلی:</strong> هوش مصنوعی یکی از پرطرفدارترین حوزه‌های دنیاست! با یادگیری AI می‌تونی آینده‌ساز باشی 🚀
+                    </div>
+
+                    <button class="start-game-btn" onclick="scrollToGame()">🎯 برو به بازی کدیار</button>
+                `
+            }
+        };
+
+        // ===== GAME DATA =====
         const questions = [
             {
                 question: '۲ + ۳ = ؟',
@@ -543,6 +1013,7 @@
         let currentQuestionIndex = 0;
         let score = 0;
         let isAnswered = false;
+        let currentLesson = null;
 
         // ===== DOM ELEMENTS =====
         const questionText = document.getElementById('questionText');
@@ -552,8 +1023,53 @@
         const scoreDisplay = document.getElementById('scoreDisplay');
         const characterEmoji = document.getElementById('characterEmoji');
         const toast = document.getElementById('toast');
+        const homeSection = document.getElementById('homeSection');
+        const lessonDetail = document.getElementById('lessonDetail');
+        const backBtn = document.getElementById('backBtn');
 
         // ===== FUNCTIONS =====
+
+        // نمایش آموزش
+        function showLesson(id) {
+            const data = lessonsData[id];
+            if (!data) return;
+
+            currentLesson = id;
+            document.getElementById('detailIcon').textContent = data.icon;
+            document.getElementById('detailTitle').textContent = data.title;
+            const levelTag = document.getElementById('detailLevel');
+            levelTag.textContent = data.level;
+            levelTag.style.background = data.levelColor;
+            document.getElementById('detailContent').innerHTML = data.content;
+
+            homeSection.style.display = 'none';
+            lessonDetail.classList.add('show');
+            backBtn.classList.add('show');
+            document.querySelector('.header h1 .logo-sub').textContent = '📖 در حال آموزش';
+
+            // اسکرول به بالای صفحه
+            lessonDetail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            showToast(`📚 ${data.icon} شروع آموزش ${data.title}!`);
+        }
+
+        // بازگشت به صفحه اصلی
+        function showHome() {
+            homeSection.style.display = 'block';
+            lessonDetail.classList.remove('show');
+            backBtn.classList.remove('show');
+            document.querySelector('.header h1 .logo-sub').textContent = 'یار برنامه‌نویسی کودکان';
+            currentLesson = null;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // اسکرول به بازی
+        function scrollToGame() {
+            document.getElementById('gameSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            showToast('🎯 بیا بازی کدیار رو شروع کنیم!');
+        }
+
+        // ===== GAME FUNCTIONS =====
         function loadQuestion(index) {
             const q = questions[index];
             if (!q) return;
@@ -561,7 +1077,6 @@
             questionText.textContent = q.question;
             questionText.style.borderColor = '#6C5CE7';
 
-            // Update options
             const buttons = optionsContainer.querySelectorAll('button');
             buttons.forEach((btn, i) => {
                 btn.textContent = q.options[i] || '?';
@@ -573,7 +1088,6 @@
             nextBtn.style.display = 'none';
             isAnswered = false;
 
-            // Character animation
             characterEmoji.textContent = '🧙‍♂️';
             characterEmoji.style.animation = 'none';
             setTimeout(() => {
@@ -589,10 +1103,8 @@
             const buttons = optionsContainer.querySelectorAll('button');
             const isCorrect = selectedIndex === q.correct;
 
-            // Disable all buttons
             buttons.forEach(btn => btn.disabled = true);
 
-            // Show correct/wrong
             buttons.forEach((btn, i) => {
                 if (i === q.correct) {
                     btn.classList.add('correct');
@@ -601,7 +1113,6 @@
                 }
             });
 
-            // Update score & feedback
             if (isCorrect) {
                 score += 10;
                 feedback.innerHTML = `<span class="correct-text">✅ درست! 🎉 ${q.hint}</span>`;
@@ -616,11 +1127,8 @@
             }
 
             scoreDisplay.textContent = score;
-
-            // Show next button
             nextBtn.style.display = 'inline-block';
 
-            // Check if game finished
             if (currentQuestionIndex === questions.length - 1) {
                 nextBtn.textContent = '🏆 پایان بازی';
             }
@@ -628,8 +1136,7 @@
 
         function nextQuestion() {
             if (currentQuestionIndex === questions.length - 1) {
-                // Game finished
-                feedback.innerHTML = `<span style="color:#6C5CE7;font-size:1.8rem;">🎊 آفرین کدیار! بازی رو تموم کردی! امتیازت: ${score}</span>`;
+                feedback.innerHTML = `<span style="color:#6C5CE7;font-size:1.6rem;">🎊 آفرین کدیار! بازی رو تموم کردی! امتیازت: ${score}</span>`;
                 nextBtn.style.display = 'none';
                 characterEmoji.textContent = '🏆';
                 questionText.textContent = '🎉 تبریک!';
