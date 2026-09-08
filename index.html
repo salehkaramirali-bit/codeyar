@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کدیار - آموزش برنامه‌نویسی برای کودکان</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazir', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            border-radius: 30px;
+            padding: 30px 40px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 15px 40px rgba(106, 17, 203, 0.3);
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header h1 span {
+            font-size: 3rem;
+        }
+
+        .header .logo-sub {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            display: block;
+            font-weight: normal;
+        }
+
+        .header .score-box {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            border-radius: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .header .score-box .star {
+            color: #ffd700;
+            font-size: 2rem;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ===== LESSON CARDS ===== */
+        .lessons-section {
+            margin-bottom: 40px;
+        }
+
+        .lessons-section h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .lesson-card {
+            background: white;
+            border-radius: 25px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lesson-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .lesson-card:hover::before {
+            opacity: 1;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
+        }
+
+        .lesson-card:nth-child(1) { border-color: #FF6B6B; }
+        .lesson-card:nth-child(2) { border-color: #4ECDC4; }
+        .lesson-card:nth-child(3) { border-color: #FFE66D; }
+        .lesson-card:nth-child(4) { border-color: #A8E6CF; }
+        .lesson-card:nth-child(5) { border-color: #FF8A5C; }
+        .lesson-card:nth-child(6) { border-color: #6C5CE7; }
+
+        .lesson-card .icon {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .lesson-card h3 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .lesson-card p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .lesson-card .badge {
+            display: inline-block;
+            color: white;
+            padding: 3px 15px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-top: 10px;
+        }
+
+        .lesson-card:nth-child(1) .badge { background: #FF6B6B; }
+        .lesson-card:nth-child(2) .badge { background: #4ECDC4; }
+        .lesson-card:nth-child(3) .badge { background: #FFA94D; }
+        .lesson-card:nth-child(4) .badge { background: #A8E6CF; color: #333; }
+        .lesson-card:nth-child(5) .badge { background: #FF8A5C; }
+        .lesson-card:nth-child(6) .badge { background: #6C5CE7; }
+
+        /* ===== GAME AREA ===== */
+        .game-section {
+            background: white;
+            border-radius: 30px;
+            padding: 35px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+        }
+
+        .game-section h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .game-section .subtitle {
+            color: #888;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .game-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .game-question {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #333;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px 50px;
+            border-radius: 20px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 500px;
+            border: 3px dashed #6C5CE7;
+            transition: all 0.3s ease;
+        }
+
+        .game-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .game-options button {
+            padding: 20px;
+            font-size: 1.8rem;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: bold;
+            background: #f0f0f0;
+            color: #333;
+            box-shadow: 0 4px 0 #d0d0d0;
+            position: relative;
+        }
+
+        .game-options button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 0 #d0d0d0;
+            background: #e8e8e8;
+        }
+
+        .game-options button:active:not(:disabled) {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0 #d0d0d0;
+        }
+
+        .game-options button.correct {
+            background: #4CAF50;
+            color: white;
+            box-shadow: 0 4px 0 #2E7D32;
+        }
+
+        .game-options button.wrong {
+            background: #FF6B6B;
+            color: white;
+            box-shadow: 0 4px 0 #C0392B;
+        }
+
+        .game-options button:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .game-feedback {
+            font-size: 1.5rem;
+            min-height: 60px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .game-feedback .correct-text { color: #4CAF50; }
+        .game-feedback .wrong-text { color: #FF6B6B; }
+
+        .next-btn {
+            padding: 15px 50px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            display: none;
+        }
+
+        .next-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(106, 17, 203, 0.4);
+        }
+
+        /* ===== CHARACTER ===== */
+        .character-area {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .character {
+            font-size: 5rem;
+            animation: float 3s ease-in-out infinite;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 50%;
+            padding: 20px;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* ===== TOAST NOTIFICATION ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            opacity: 0;
+            transition: all 0.5s ease;
+            pointer-events: none;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+                justify-content: center;
+            }
+
+            .game-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .game-question {
+                font-size: 1.8rem;
+                padding: 15px 25px;
+                min-height: 80px;
+            }
+
+            .lessons-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            }
+
+            .character {
+                width: 80px;
+                height: 80px;
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            .header .score-box {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+            .game-options button {
+                font-size: 1.3rem;
+                padding: 15px;
+            }
+            .game-section {
+                padding: 20px;
+            }
+        }
+
+        /* ===== FONT ===== */
+        @import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast"></div>
+
+    <div class="container">
+
+        <!-- ===== HEADER ===== -->
+        <header class="header">
+            <h1>
+                <span>🧙‍♂️</span>
+                کدیار
+                <span class="logo-sub">یار برنامه‌نویسی کودکان</span>
+            </h1>
+            <div class="score-box">
+                <span class="star">⭐</span>
+                امتیاز: <span id="scoreDisplay">۰</span>
+            </div>
+        </header>
+
+        <!-- ===== LESSONS SECTION ===== -->
+        <section class="lessons-section">
+            <h2>📚 دوره‌های آموزشی کدیار</h2>
+            <div class="lessons-grid">
+                <div class="lesson-card" onclick="showToast('🧩 شروع ماجرای اسکرچ! بیا با بلوک‌ها بازی کنیم')">
+                    <span class="icon">🧩</span>
+                    <h3>اسکرچ جادویی</h3>
+                    <p>ساخت بازی با بلوک‌ها</p>
+                    <span class="badge">مبتدی</span>
+                </div>
+                <div class="lesson-card" onclick="showToast('🐍 پایتون کوچولو منتظرته! بیا کدنویسی رو شروع کن')">
+                    <span class="icon">🐍</span>
+                    <h3>پایتون بازیگوش</h3>
+                    <p>کدنویسی با پایتون</p>
+                    <span class="badge">متوسط</span>
+                </div>
+                <div class="lesson-card" onclick="showToast('🌐 وب‌ساز کوچک! با HTML و CSS سایت بساز')">
+                    <span class="icon">🌐</span>
+                    <h3>ساخت وب‌سایت</h3>
+                    <p>HTML و CSS</p>
+                    <span class="badge">متوسط</span>
+                </div>
+                <div class="lesson-card" onclick="showToast('🤖 ربات بازیگوش! الگوریتم‌های باحال یاد بگیر')">
+                    <span class="icon">🤖</span>
+                    <h3>ربات‌سازی</h3>
+                    <p>الگوریتم و منطق</p>
+                    <span class="badge">پیشرفته</span>
+                </div>
+                <div class="lesson-card" onclick="showToast('🎮 ساخت بازی! با جاوااسکریپت بازی‌های جذاب بساز')">
+                    <span class="icon">🎮</span>
+                    <h3>بازی‌سازی</h3>
+                    <p>با جاوااسکریپت</p>
+                    <span class="badge">پیشرفته</span>
+                </div>
+                <div class="lesson-card" onclick="showToast('💡 هوش مصنوعی! ماشین‌ها رو باهوش کن')">
+                    <span class="icon">💡</span>
+                    <h3>هوش مصنوعی</h3>
+                    <p>یادگیری ماشین</p>
+                    <span class="badge">حرفه‌ای</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== GAME SECTION ===== -->
+        <section class="game-section">
+            <h2>🎯 بازی کدنویسی کدیار</h2>
+            <p class="subtitle">به سوالات پاسخ بده و امتیاز جمع کن! 🏆</p>
+
+            <div class="game-area">
+                <div class="game-question" id="questionText">۲ + ۳ = ؟</div>
+
+                <div class="game-options" id="optionsContainer">
+                    <button onclick="checkAnswer(0)">۵</button>
+                    <button onclick="checkAnswer(1)">۶</button>
+                    <button onclick="checkAnswer(2)">۴</button>
+                    <button onclick="checkAnswer(3)">۷</button>
+                </div>
+
+                <div class="game-feedback" id="feedback"></div>
+
+                <button class="next-btn" id="nextBtn" onclick="nextQuestion()">سوال بعدی ➜</button>
+            </div>
+        </section>
+
+        <!-- ===== CHARACTER ===== -->
+        <div class="character-area">
+            <div class="character" id="characterEmoji">
+                🧙‍♂️
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ===== DATA =====
+        const questions = [
+            {
+                question: '۲ + ۳ = ؟',
+                options: ['۵', '۶', '۴', '۷'],
+                correct: 0,
+                hint: '۲ تا سیب + ۳ تا سیب = ۵ تا سیب! 🍎'
+            },
+            {
+                question: '۱۰ - ۴ = ؟',
+                options: ['۵', '۶', '۷', '۴'],
+                correct: 1,
+                hint: '۱۰ تا آب نبات - ۴ تا = ۶ تا آب نبات! 🍬'
+            },
+            {
+                question: '۵ × ۲ = ؟',
+                options: ['۷', '۸', '۱۰', '۱۲'],
+                correct: 2,
+                hint: '۵ تا ۲ تا = ۱۰ تا! 🎯'
+            },
+            {
+                question: 'کدوم یکی عدد اول هست؟',
+                options: ['۴', '۶', '۷', '۹'],
+                correct: 2,
+                hint: '۷ فقط بر ۱ و خودش بخش‌پذیره! 🔢'
+            },
+            {
+                question: '۱۲ ÷ ۳ = ؟',
+                options: ['۳', '۴', '۵', '۶'],
+                correct: 1,
+                hint: '۱۲ تا مهره رو ۳ گروه کن، هر گروه ۴ تا میشه! 🧮'
+            },
+            {
+                question: '۳ × ۳ = ؟',
+                options: ['۶', '۸', '۹', '۱۲'],
+                correct: 2,
+                hint: '۳ تا ۳ تا = ۹ تا! ✨'
+            }
+        ];
+
+        // ===== STATE =====
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let isAnswered = false;
+
+        // ===== DOM ELEMENTS =====
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const feedback = document.getElementById('feedback');
+        const nextBtn = document.getElementById('nextBtn');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const characterEmoji = document.getElementById('characterEmoji');
+        const toast = document.getElementById('toast');
+
+        // ===== FUNCTIONS =====
+        function loadQuestion(index) {
+            const q = questions[index];
+            if (!q) return;
+
+            questionText.textContent = q.question;
+            questionText.style.borderColor = '#6C5CE7';
+
+            // Update options
+            const buttons = optionsContainer.querySelectorAll('button');
+            buttons.forEach((btn, i) => {
+                btn.textContent = q.options[i] || '?';
+                btn.className = '';
+                btn.disabled = false;
+            });
+
+            feedback.innerHTML = '';
+            nextBtn.style.display = 'none';
+            isAnswered = false;
+
+            // Character animation
+            characterEmoji.textContent = '🧙‍♂️';
+            characterEmoji.style.animation = 'none';
+            setTimeout(() => {
+                characterEmoji.style.animation = 'float 3s ease-in-out infinite';
+            }, 10);
+        }
+
+        function checkAnswer(selectedIndex) {
+            if (isAnswered) return;
+            isAnswered = true;
+
+            const q = questions[currentQuestionIndex];
+            const buttons = optionsContainer.querySelectorAll('button');
+            const isCorrect = selectedIndex === q.correct;
+
+            // Disable all buttons
+            buttons.forEach(btn => btn.disabled = true);
+
+            // Show correct/wrong
+            buttons.forEach((btn, i) => {
+                if (i === q.correct) {
+                    btn.classList.add('correct');
+                } else if (i === selectedIndex && !isCorrect) {
+                    btn.classList.add('wrong');
+                }
+            });
+
+            // Update score & feedback
+            if (isCorrect) {
+                score += 10;
+                feedback.innerHTML = `<span class="correct-text">✅ درست! 🎉 ${q.hint}</span>`;
+                characterEmoji.textContent = '😃';
+                questionText.style.borderColor = '#4CAF50';
+                showToast('🎉 آفرین! پاسخ درست بود!');
+            } else {
+                feedback.innerHTML = `<span class="wrong-text">❌ نه! پاسخ درست: ${q.options[q.correct]} — ${q.hint}</span>`;
+                characterEmoji.textContent = '😅';
+                questionText.style.borderColor = '#FF6B6B';
+                showToast(`😊 دفعه بعد بهتر! پاسخ درست: ${q.options[q.correct]}`);
+            }
+
+            scoreDisplay.textContent = score;
+
+            // Show next button
+            nextBtn.style.display = 'inline-block';
+
+            // Check if game finished
+            if (currentQuestionIndex === questions.length - 1) {
+                nextBtn.textContent = '🏆 پایان بازی';
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex === questions.length - 1) {
+                // Game finished
+                feedback.innerHTML = `<span style="color:#6C5CE7;font-size:1.8rem;">🎊 آفرین کدیار! بازی رو تموم کردی! امتیازت: ${score}</span>`;
+                nextBtn.style.display = 'none';
+                characterEmoji.textContent = '🏆';
+                questionText.textContent = '🎉 تبریک!';
+                questionText.style.borderColor = '#FFD700';
+                optionsContainer.querySelectorAll('button').forEach(btn => btn.disabled = true);
+                showToast(`🏆 بازی تموم شد! امتیاز نهایی: ${score}`);
+                return;
+            }
+
+            currentQuestionIndex++;
+            loadQuestion(currentQuestionIndex);
+        }
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // ===== INIT =====
+        loadQuestion(0);
+    </script>
+
+</body>
+</html>
