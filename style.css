@@ -975,3 +975,43 @@ body {
         padding: 5px 14px;
     }
 }
+/* ===== ADMIN CARDS ===== */
+.admin-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    border-color: #6a11cb;
+}
+
+.admin-card h4 {
+    color: #333;
+    margin-top: 8px;
+    font-size: 1rem;
+}
+
+/* ===== ADMIN CLASS BUTTON ===== */
+#adminClassBtn .submit-btn {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+#adminClassBtn .submit-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
