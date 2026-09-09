@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>کلاس‌های کدیار</title>
+    <title>کلاس‌های کدیار - Google Meet</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
 </head>
@@ -16,12 +16,11 @@
             <h1>
                 <span>🧙‍♂️</span>
                 کدیار
-                <span class="logo-sub">آموزش آنلاین برنامه‌نویسی</span>
+                <span class="logo-sub">کلاس‌های Google Meet</span>
             </h1>
             <nav class="nav-links">
                 <a href="index.html">🏠 خانه</a>
                 <a href="classes.html" class="active">📚 کلاس‌ها</a>
-                <a href="class-room.html">💬 کلاس زنده</a>
                 <a href="profile.html">👤 پروفایل</a>
             </nav>
         </div>
@@ -41,7 +40,7 @@
 
         <section class="page-header">
             <h2>📚 همه کلاس‌های کدیار</h2>
-            <p>در کلاس‌های آنلاین شرکت کنید و برنامه‌نویسی را به صورت زنده یاد بگیرید</p>
+            <p>در کلاس‌های آنلاین Google Meet شرکت کنید و برنامه‌نویسی را به صورت زنده یاد بگیرید</p>
         </section>
 
         <section class="classes-list">
@@ -56,11 +55,30 @@
                 </select>
             </div>
             <div class="classes-grid" id="allClassesList">
-                <!-- توسط JS پر می‌شود -->
                 <div class="loading">⏳ در حال بارگذاری...</div>
             </div>
         </section>
 
+    </div>
+
+    <!-- ===== MODAL JOIN CLASS ===== -->
+    <div class="modal" id="joinModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeJoinModal()">&times;</span>
+            <h2>🎥 ورود به کلاس</h2>
+            <div id="joinClassInfo">
+                <p style="font-size:1.1rem;margin:10px 0;" id="joinClassName">نام کلاس</p>
+                <p style="color:#888;" id="joinClassTime">⏰ زمان: </p>
+                <div style="background:#f0f0f0;padding:15px;border-radius:15px;margin:15px 0;">
+                    <p style="font-weight:bold;color:#6a11cb;">🔗 لینک جلسه Google Meet:</p>
+                    <a href="#" id="joinClassLink" target="_blank" style="color:#2575fc;word-break:break-all;font-size:1rem;">لینک</a>
+                </div>
+                <div style="display:flex;gap:10px;">
+                    <a href="#" id="joinClassBtn" target="_blank" class="submit-btn" style="text-align:center;text-decoration:none;flex:1;">🎥 ورود به جلسه</a>
+                    <button onclick="closeJoinModal()" class="reset-btn" style="flex:0.5;">بستن</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="modal" id="loginModal">
