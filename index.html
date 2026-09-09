@@ -24,7 +24,7 @@
                 <a href="index.html" class="active">🏠 خانه</a>
                 <a href="classes.html">📚 کلاس‌ها</a>
                 <a href="profile.html">👤 پروفایل</a>
-                <a href="javascript:void(0)" onclick="showAdminLogin()" style="background:rgba(255,215,0,0.2);cursor:pointer;">👑 مدیریت</a>
+                <button class="admin-nav-btn" onclick="showAdminLogin()">👑 مدیریت</button>
             </nav>
         </div>
         <div class="header-right">
@@ -166,9 +166,9 @@
             <h3 style="color:#6a11cb;font-size:1.3rem;">🧙‍♂️ کدیار</h3>
             <p>آموزش آنلاین برنامه‌نویسی برای کودکان و نوجوانان</p>
             <div class="footer-links">
-                <a href="javascript:void(0)" onclick="showToast('📖 درباره کدیار')">درباره ما</a>
-                <a href="javascript:void(0)" onclick="showToast('📧 ایمیل: salehkaramirali@gmail.com')">تماس با ما</a>
-                <a href="javascript:void(0)" onclick="showToast('📱 شبکه‌های اجتماعی')">شبکه‌های اجتماعی</a>
+                <button class="footer-link-btn" onclick="showToast('📖 درباره کدیار')">درباره ما</button>
+                <button class="footer-link-btn" onclick="showToast('📧 ایمیل: salehkaramirali@gmail.com')">تماس با ما</button>
+                <button class="footer-link-btn" onclick="showToast('📱 شبکه‌های اجتماعی')">شبکه‌های اجتماعی</button>
             </div>
             <p style="font-size:0.8rem;margin-top:10px;">© ۲۰۲۶ کدیار — همه حقوق محفوظ است</p>
         </footer>
@@ -198,7 +198,7 @@
                 <input type="password" id="adminPassword" placeholder="رمز عبور را وارد کنید" required>
                 <button type="submit" class="submit-btn">ورود به مدیریت 🚀</button>
             </form>
-            <p style="color:#888;font-size:0.8rem;margin-top:10px;">رمز عبور: admin-amirali</p>
+            <p style="color:#888;font-size:0.8rem;margin-top:10px;">رمز عبور: <strong>admin-amirali</strong></p>
         </div>
     </div>
 
