@@ -1015,3 +1015,52 @@ body {
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
 }
+
+/* ===== STATUS BADGE ===== */
+.status-badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.status-badge.waiting {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-badge.live {
+    background: #d4edda;
+    color: #155724;
+    animation: pulse 2s infinite;
+}
+
+.status-badge.ended {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* ===== PULSE ANIMATION ===== */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* دکمه ورود به کلاس زنده */
+.class-btn.meet-btn {
+    animation: pulse 2s infinite;
+    background: linear-gradient(135deg, #4CAF50, #2E7D32) !important;
+}
+
+.class-btn.meet-btn:hover {
+    animation: none;
+    transform: scale(1.05);
+}
