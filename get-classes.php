@@ -4,7 +4,7 @@ header('Access-Control-Allow-Origin: *');
 
 $dataFile = 'data/classes.json';
 
-// داده‌های پیش‌فرض
+// داده‌های پیش‌فرض با لینک Google Meet
 $defaultClasses = [
     [
         'id' => 1,
@@ -15,7 +15,8 @@ $defaultClasses = [
         'date' => date('Y/m/d'),
         'students' => 12,
         'status' => 'open',
-        'registered' => false
+        'registered' => false,
+        'meet_link' => 'https://meet.google.com/abc-defg-hij'
     ],
     [
         'id' => 2,
@@ -26,7 +27,8 @@ $defaultClasses = [
         'date' => date('Y/m/d'),
         'students' => 8,
         'status' => 'open',
-        'registered' => false
+        'registered' => false,
+        'meet_link' => 'https://meet.google.com/klm-nopq-rst'
     ],
     [
         'id' => 3,
@@ -37,7 +39,8 @@ $defaultClasses = [
         'date' => date('Y/m/d', strtotime('+1 day')),
         'students' => 5,
         'status' => 'open',
-        'registered' => false
+        'registered' => false,
+        'meet_link' => 'https://meet.google.com/uvw-xyz-a12'
     ],
     [
         'id' => 4,
@@ -48,7 +51,32 @@ $defaultClasses = [
         'date' => date('Y/m/d', strtotime('+2 day')),
         'students' => 3,
         'status' => 'open',
-        'registered' => false
+        'registered' => false,
+        'meet_link' => 'https://meet.google.com/b34-cde-f56'
+    ],
+    [
+        'id' => 5,
+        'name' => 'بازی‌سازی با اسکرچ',
+        'level' => 'متوسط',
+        'icon' => '🎮',
+        'time' => '۱۴:۰۰ - ۱۵:۳۰',
+        'date' => date('Y/m/d'),
+        'students' => 6,
+        'status' => 'open',
+        'registered' => false,
+        'meet_link' => 'https://meet.google.com/g78-hij-k90'
+    ],
+    [
+        'id' => 6,
+        'name' => 'الگوریتم و ربات',
+        'level' => 'پیشرفته',
+        'icon' => '🤖',
+        'time' => '۱۸:۰۰ - ۱۹:۳۰',
+        'date' => date('Y/m/d', strtotime('+1 day')),
+        'students' => 4,
+        'status' => 'open',
+        'registered' => false,
+        'meet_link' => 'https://meet.google.com/l12-mno-p34'
     ]
 ];
 
@@ -64,6 +92,10 @@ $classes = json_decode(file_get_contents($dataFile), true);
 if (!is_array($classes)) {
     $classes = $defaultClasses;
 }
+
+// اضافه کردن وضعیت ثبت‌نام برای کاربر فعلی (اگر لاگین کرده باشد)
+// برای سادگی، همه کاربران ثبت‌نام شده در نظر گرفته می‌شوند
+// در نسخه واقعی باید از session استفاده کنید
 
 echo json_encode([
     'success' => true,
