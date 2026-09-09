@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کلاس‌های کدیار</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="toast" id="toast"></div>
+
+    <header class="header">
+        <div class="header-left">
+            <h1>
+                <span>🧙‍♂️</span>
+                کدیار
+                <span class="logo-sub">آموزش آنلاین برنامه‌نویسی</span>
+            </h1>
+            <nav class="nav-links">
+                <a href="index.html">🏠 خانه</a>
+                <a href="classes.html" class="active">📚 کلاس‌ها</a>
+                <a href="class-room.html">💬 کلاس زنده</a>
+                <a href="profile.html">👤 پروفایل</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="score-box">
+                <span class="star">⭐</span>
+                امتیاز: <span id="scoreDisplay">۰</span>
+            </div>
+            <div class="user-box">
+                <span id="userNameDisplay">کاربر</span>
+                <button class="login-btn" onclick="toggleLogin()">ورود</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <section class="page-header">
+            <h2>📚 همه کلاس‌های کدیار</h2>
+            <p>در کلاس‌های آنلاین شرکت کنید و برنامه‌نویسی را به صورت زنده یاد بگیرید</p>
+        </section>
+
+        <section class="classes-list">
+            <div class="filter-bar">
+                <input type="text" id="classSearch" placeholder="🔍 جستجوی کلاس..." oninput="filterClasses()">
+                <select id="levelFilter" onchange="filterClasses()">
+                    <option value="all">همه سطوح</option>
+                    <option value="مبتدی">مبتدی</option>
+                    <option value="متوسط">متوسط</option>
+                    <option value="پیشرفته">پیشرفته</option>
+                    <option value="حرفه‌ای">حرفه‌ای</option>
+                </select>
+            </div>
+            <div class="classes-grid" id="allClassesList">
+                <!-- توسط JS پر می‌شود -->
+                <div class="loading">⏳ در حال بارگذاری...</div>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="toggleLogin()">&times;</span>
+            <h2>👤 ورود به کدیار</h2>
+            <form id="loginForm" onsubmit="loginUser(event)">
+                <label>👤 نام کاربری</label>
+                <input type="text" id="loginName" placeholder="نام خود را وارد کنید" required>
+                <button type="submit" class="submit-btn">ورود 🚀</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
