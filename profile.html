@@ -22,6 +22,7 @@
                 <a href="index.html">🏠 خانه</a>
                 <a href="classes.html">📚 کلاس‌ها</a>
                 <a href="profile.html" class="active">👤 پروفایل</a>
+                <a href="javascript:void(0)" onclick="showAdminLogin()" style="background:rgba(255,215,0,0.2);cursor:pointer;">👑 مدیریت</a>
             </nav>
         </div>
         <div class="header-right">
@@ -79,6 +80,7 @@
 
     </div>
 
+    <!-- ===== MODAL LOGIN ===== -->
     <div class="modal" id="loginModal">
         <div class="modal-content">
             <span class="modal-close" onclick="toggleLogin()">&times;</span>
@@ -88,6 +90,54 @@
                 <input type="text" id="loginName" placeholder="نام خود را وارد کنید" required>
                 <button type="submit" class="submit-btn">ورود 🚀</button>
             </form>
+        </div>
+    </div>
+
+    <!-- ===== MODAL ADMIN LOGIN ===== -->
+    <div class="modal" id="adminLoginModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeAdminLogin()">&times;</span>
+            <h2>👑 ورود به پنل مدیریت</h2>
+            <form id="adminLoginForm" onsubmit="adminLogin(event)">
+                <label>🔑 رمز عبور مدیریت</label>
+                <input type="password" id="adminPassword" placeholder="رمز عبور را وارد کنید" required>
+                <button type="submit" class="submit-btn">ورود به مدیریت 🚀</button>
+            </form>
+            <p style="color:#888;font-size:0.8rem;margin-top:10px;">رمز عبور: admin-amirali</p>
+        </div>
+    </div>
+
+    <!-- ===== MODAL ADMIN PANEL ===== -->
+    <div class="modal" id="adminPanelModal">
+        <div class="modal-content" style="max-width:700px;">
+            <span class="modal-close" onclick="closeAdminPanel()">&times;</span>
+            <h2>👑 پنل مدیریت کدیار</h2>
+            <p style="color:#888;margin-bottom:15px;">مدیریت کلاس‌ها و تکالیف</p>
+            
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+                <div class="admin-card" onclick="openAdminClasses()">
+                    <span style="font-size:2rem;">📚</span>
+                    <h4>مدیریت کلاس‌ها</h4>
+                    <p style="font-size:0.8rem;color:#888;">افزودن، ویرایش و حذف کلاس</p>
+                </div>
+                <div class="admin-card" onclick="openAdminHomework()">
+                    <span style="font-size:2rem;">📝</span>
+                    <h4>تکالیف ارسالی</h4>
+                    <p style="font-size:0.8rem;color:#888;">مشاهده و بررسی تکالیف</p>
+                </div>
+                <div class="admin-card" onclick="openAdminStudents()">
+                    <span style="font-size:2rem;">👨‍🎓</span>
+                    <h4>دانش‌آموزان</h4>
+                    <p style="font-size:0.8rem;color:#888;">لیست دانش‌آموزان ثبت‌نام شده</p>
+                </div>
+                <div class="admin-card" onclick="openAdminSettings()">
+                    <span style="font-size:2rem;">⚙️</span>
+                    <h4>تنظیمات</h4>
+                    <p style="font-size:0.8rem;color:#888;">تنظیمات سایت</p>
+                </div>
+            </div>
+            
+            <button onclick="adminLogout()" style="margin-top:20px;padding:10px 30px;background:#FF6B6B;color:white;border:none;border-radius:25px;cursor:pointer;font-weight:bold;font-family:inherit;width:100%;">🚪 خروج از مدیریت</button>
         </div>
     </div>
 
