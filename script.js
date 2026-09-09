@@ -1,4 +1,6 @@
+// ============================================================
 // ===== STATE =====
+// ============================================================
 let currentUser = localStorage.getItem('codeyar_user') || 'کاربر';
 let score = parseInt(localStorage.getItem('codeyar_score')) || 0;
 let isAdmin = localStorage.getItem('codeyar_admin') === 'true';
@@ -6,7 +8,6 @@ let isAdmin = localStorage.getItem('codeyar_admin') === 'true';
 // ============================================================
 // ===== DOM READY =====
 // ============================================================
-
 document.addEventListener('DOMContentLoaded', function() {
     // نمایش نام کاربر
     const userNameDisplay = document.getElementById('userNameDisplay');
@@ -26,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const adminBtn = document.getElementById('adminClassBtn');
         if (adminBtn) adminBtn.style.display = 'block';
         
-        // نمایش وضعیت مدیر در کنسول
         console.log('✅ مدیر وارد شده است');
     } else {
         console.log('👤 کاربر عادی');
@@ -105,6 +105,13 @@ function showAdminLogin() {
     const modal = document.getElementById('adminLoginModal');
     if (modal) {
         modal.classList.add('show');
+        // پاک کردن فیلد رمز
+        const passInput = document.getElementById('adminPassword');
+        if (passInput) passInput.value = '';
+        // فوکوس روی فیلد رمز
+        setTimeout(() => {
+            if (passInput) passInput.focus();
+        }, 300);
     } else {
         console.error('❌ مودال adminLoginModal پیدا نشد');
         showToast('❌ خطا: مودال مدیریت پیدا نشد');
@@ -128,7 +135,7 @@ function adminLogin(e) {
     }
     
     const password = passwordInput.value;
-    console.log('رمز وارد شده:', password);
+    console.log('✅ رمز وارد شد (تعداد کاراکتر):', password.length);
 
     if (password === ADMIN_PASSWORD) {
         isAdmin = true;
@@ -157,7 +164,7 @@ function adminLogin(e) {
         loadAllClasses();
         loadTodayClasses();
     } else {
-        console.warn('❌ رمز عبور اشتباه:', password);
+        console.warn('❌ رمز عبور اشتباه');
         showToast('❌ رمز عبور اشتباه است!');
         passwordInput.value = '';
         passwordInput.focus();
@@ -226,7 +233,15 @@ function showAddClassForm() {
     }
     console.log('➕ باز کردن فرم افزودن کلاس');
     const modal = document.getElementById('addClassModal');
-    if (modal) modal.classList.add('show');
+    if (modal) {
+        modal.classList.add('show');
+        // تنظیم تاریخ امروز به صورت پیش‌فرض
+        const dateInput = document.getElementById('newClassDate');
+        if (dateInput) {
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.value = today;
+        }
+    }
 }
 
 function closeAddClass() {
@@ -243,6 +258,7 @@ async function addClass(e) {
         return;
     }
 
+    // دریافت مقادیر
     const name = document.getElementById('newClassName');
     const level = document.getElementById('newClassLevel');
     const time = document.getElementById('newClassTime');
@@ -252,6 +268,7 @@ async function addClass(e) {
 
     if (!name || !level || !time || !date || !meetLink || !icon) {
         showToast('❌ خطا: همه فیلدها پیدا نشدند');
+        console.error('❌ یکی از فیلدها پیدا نشد:', { name, level, time, date, meetLink, icon });
         return;
     }
 
@@ -262,39 +279,62 @@ async function addClass(e) {
     const meetLinkVal = meetLink.value.trim();
     const iconVal = icon.value;
 
+    // اعتبارسنجی
     if (!nameVal || !timeVal || !dateVal || !meetLinkVal) {
         showToast('⚠️ لطفاً همه فیلدها را پر کنید');
         return;
     }
 
+    // داده‌های ارسالی
+    const data = {
+        name: nameVal,
+        level: levelVal,
+        time: timeVal,
+        date: dateVal,
+        meet_link: meetLinkVal,
+        icon: iconVal
+    };
+
+    console.log('📤 ارسال داده به سرور:', data);
+
     try {
         const response = await fetch('add-class.php', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                name: nameVal,
-                level: levelVal,
-                time: timeVal,
-                date: dateVal,
-                meet_link: meetLinkVal,
-                icon: iconVal
-            })
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
         });
-        const data = await response.json();
-        console.log('پاسخ افزودن کلاس:', data);
-        
-        if (data.success) {
-            showToast('✅ کلاس با موفقیت اضافه شد!');
+
+        // دریافت پاسخ به صورت متن
+        const responseText = await response.text();
+        console.log('📥 پاسخ خام از سرور:', responseText);
+
+        // تبدیل به JSON
+        let result;
+        try {
+            result = JSON.parse(responseText);
+        } catch (e) {
+            console.error('❌ خطا در parse JSON:', e);
+            showToast('❌ خطا در پردازش پاسخ سرور: ' + responseText.substring(0, 100));
+            return;
+        }
+
+        if (result.success) {
+            showToast('✅ ' + result.message);
             closeAddClass();
             document.getElementById('addClassForm').reset();
+            // بارگذاری مجدد کلاس‌ها
             loadAllClasses();
             loadTodayClasses();
             loadStats();
         } else {
-            showToast('❌ ' + data.message);
+            showToast('❌ ' + (result.message || 'خطا در افزودن کلاس'));
+            console.error('❌ خطای سرور:', result);
         }
     } catch (e) {
-        showToast('❌ خطا در افزودن کلاس');
+        showToast('❌ خطا در ارتباط با سرور');
         console.error('❌ خطا:', e);
     }
 }
@@ -334,13 +374,14 @@ async function updateClassStatus(classId, newStatus) {
         
         if (data.success) {
             const statusMessages = {
-                'waiting': '⏳ در انتظار شروع',
+                'waiting': '⏳ کلاس در حالت انتظار قرار گرفت',
                 'live': '🟢 کلاس شروع شد! دانش‌آموزان می‌توانند وارد شوند',
                 'ended': '🔴 کلاس به پایان رسید'
             };
-            showToast('✅ ' + statusMessages[newStatus] || 'وضعیت تغییر کرد');
+            showToast('✅ ' + (statusMessages[newStatus] || 'وضعیت تغییر کرد'));
             loadAllClasses();
             loadTodayClasses();
+            loadStats();
         } else {
             showToast('❌ ' + data.message);
         }
@@ -451,6 +492,10 @@ async function loadTodayClasses() {
         container.innerHTML = html;
     } catch (e) {
         console.log('Error loading classes:', e);
+        const container = document.getElementById('todayClassesList');
+        if (container) {
+            container.innerHTML = `<div class="loading">❌ خطا در بارگذاری کلاس‌ها</div>`;
+        }
     }
 }
 
@@ -516,6 +561,10 @@ async function loadAllClasses() {
         container.innerHTML = html;
     } catch (e) {
         console.log('Error loading classes:', e);
+        const container = document.getElementById('allClassesList');
+        if (container) {
+            container.innerHTML = `<div class="loading">❌ خطا در بارگذاری کلاس‌ها</div>`;
+        }
     }
 }
 
@@ -559,6 +608,7 @@ async function registerClass(classId) {
             showToast('✅ ثبت‌نام با موفقیت انجام شد!');
             loadAllClasses();
             loadTodayClasses();
+            loadStats();
         } else {
             showToast('❌ ' + data.message);
         }
