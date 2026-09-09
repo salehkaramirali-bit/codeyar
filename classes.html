@@ -22,6 +22,7 @@
                 <a href="index.html">🏠 خانه</a>
                 <a href="classes.html" class="active">📚 کلاس‌ها</a>
                 <a href="profile.html">👤 پروفایل</a>
+                <a href="#" onclick="showAdminLogin()" style="background:rgba(255,215,0,0.2);">👑 مدیریت</a>
             </nav>
         </div>
         <div class="header-right">
@@ -43,6 +44,11 @@
             <p>در کلاس‌های آنلاین Google Meet شرکت کنید و برنامه‌نویسی را به صورت زنده یاد بگیرید</p>
         </section>
 
+        <!-- دکمه افزودن کلاس (فقط برای استاد) -->
+        <div id="adminClassBtn" style="display:none;margin-bottom:20px;">
+            <button onclick="showAddClassForm()" class="submit-btn" style="background:linear-gradient(135deg,#4CAF50,#2E7D32);padding:12px 30px;border:none;border-radius:25px;color:white;font-weight:bold;cursor:pointer;font-family:inherit;">➕ افزودن کلاس جدید</button>
+        </div>
+
         <section class="classes-list">
             <div class="filter-bar">
                 <input type="text" id="classSearch" placeholder="🔍 جستجوی کلاس..." oninput="filterClasses()">
@@ -59,6 +65,49 @@
             </div>
         </section>
 
+    </div>
+
+    <!-- ===== MODAL ADD CLASS ===== -->
+    <div class="modal" id="addClassModal">
+        <div class="modal-content" style="max-width:500px;">
+            <span class="modal-close" onclick="closeAddClass()">&times;</span>
+            <h2>➕ افزودن کلاس جدید</h2>
+            <form id="addClassForm" onsubmit="addClass(event)">
+                <label>📚 نام کلاس</label>
+                <input type="text" id="newClassName" placeholder="مثلاً: اسکرچ جادویی" required>
+
+                <label>📊 سطح</label>
+                <select id="newClassLevel" required>
+                    <option value="مبتدی">مبتدی</option>
+                    <option value="متوسط">متوسط</option>
+                    <option value="پیشرفته">پیشرفته</option>
+                    <option value="حرفه‌ای">حرفه‌ای</option>
+                </select>
+
+                <label>⏰ زمان</label>
+                <input type="text" id="newClassTime" placeholder="مثلاً: ۱۶:۰۰ - ۱۷:۳۰" required>
+
+                <label>📅 تاریخ</label>
+                <input type="date" id="newClassDate" required>
+
+                <label>🎥 لینک Google Meet</label>
+                <input type="url" id="newClassMeet" placeholder="https://meet.google.com/abc-defg-hij" required>
+
+                <label>🖼️ آیکون (اختیاری)</label>
+                <select id="newClassIcon">
+                    <option value="🧩">🧩</option>
+                    <option value="🐍">🐍</option>
+                    <option value="🌐">🌐</option>
+                    <option value="💡">💡</option>
+                    <option value="🎮">🎮</option>
+                    <option value="🤖">🤖</option>
+                    <option value="📱">📱</option>
+                    <option value="📚">📚</option>
+                </select>
+
+                <button type="submit" class="submit-btn">➕ افزودن کلاس</button>
+            </form>
+        </div>
     </div>
 
     <!-- ===== MODAL JOIN CLASS ===== -->
@@ -81,6 +130,7 @@
         </div>
     </div>
 
+    <!-- ===== MODAL LOGIN ===== -->
     <div class="modal" id="loginModal">
         <div class="modal-content">
             <span class="modal-close" onclick="toggleLogin()">&times;</span>
@@ -89,6 +139,19 @@
                 <label>👤 نام کاربری</label>
                 <input type="text" id="loginName" placeholder="نام خود را وارد کنید" required>
                 <button type="submit" class="submit-btn">ورود 🚀</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== MODAL ADMIN LOGIN ===== -->
+    <div class="modal" id="adminLoginModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeAdminLogin()">&times;</span>
+            <h2>👑 ورود به پنل مدیریت</h2>
+            <form id="adminLoginForm" onsubmit="adminLogin(event)">
+                <label>🔑 رمز عبور مدیریت</label>
+                <input type="password" id="adminPassword" placeholder="رمز عبور را وارد کنید" required>
+                <button type="submit" class="submit-btn">ورود به مدیریت 🚀</button>
             </form>
         </div>
     </div>
