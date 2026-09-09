@@ -523,18 +523,6 @@
             color: #2E7D32;
         }
 
-        .lesson-detail .detail-content .warning-box {
-            background: #fce4ec;
-            border-right: 5px solid #e53935;
-            padding: 14px 18px;
-            border-radius: 12px;
-            margin: 14px 0;
-        }
-
-        .lesson-detail .detail-content .warning-box strong {
-            color: #c62828;
-        }
-
         .lesson-detail .detail-content .output-box {
             background: #263238;
             border-right: 5px solid #4CAF50;
@@ -640,7 +628,7 @@
             white-space: nowrap;
         }
 
-        /* ===== HOMEWORK SECTION ===== */
+        /* ===== HOMEWORK SECTION (بدون سرور) ===== */
         .homework-section {
             background: white;
             border-radius: 30px;
@@ -1228,26 +1216,6 @@
             .stat-card {
                 padding: 14px 10px;
             }
-            .homework-form input,
-            .homework-form select,
-            .homework-form textarea {
-                font-size: 0.85rem;
-                padding: 8px 12px;
-            }
-            .output-section {
-                padding: 15px;
-            }
-            .output-table {
-                font-size: 0.65rem;
-            }
-            .output-table th,
-            .output-table td {
-                padding: 6px 8px;
-            }
-            .output-table .code-preview {
-                max-width: 80px;
-                font-size: 0.55rem;
-            }
         }
 
         @import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
@@ -1269,7 +1237,7 @@
             <nav class="nav-links">
                 <a href="#" class="active" onclick="showHome()">🏠 خانه</a>
                 <a href="#" onclick="document.getElementById('outputSection').scrollIntoView({behavior:'smooth'})">📊 خروجی‌ها</a>
-                <a href="#" onclick="document.getElementById('homeworkSection').scrollIntoView({behavior:'smooth'})">📤 ارسال تکلیف</a>
+                <a href="#" onclick="document.getElementById('homeworkSection').scrollIntoView({behavior:'smooth'})">📤 تکلیف</a>
                 <a href="#" onclick="document.getElementById('gameSection').scrollIntoView({behavior:'smooth'})">🎯 بازی</a>
             </nav>
         </div>
@@ -1418,7 +1386,10 @@
                     <span class="emoji">📊</span>
                     خروجی همه آموزش‌ها
                 </h2>
-                <button class="reset-btn" onclick="resetOutputs()" style="padding:8px 20px;font-size:0.85rem;">🔄 بازنشانی</button>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                    <button class="reset-btn" onclick="resetOutputs()" style="padding:8px 20px;font-size:0.85rem;">🔄 بازنشانی</button>
+                    <button class="reset-btn" onclick="exportOutputs()" style="padding:8px 20px;font-size:0.85rem;border-color:#6a11cb;color:#6a11cb;">📥 خروجی JSON</button>
+                </div>
             </div>
             <div class="output-table-wrap">
                 <table class="output-table" id="outputTable">
@@ -1439,18 +1410,18 @@
             </div>
         </section>
 
-        <!-- ===== HOMEWORK SECTION ===== -->
+        <!-- ===== HOMEWORK SECTION (بدون سرور) ===== -->
         <section class="homework-section" id="homeworkSection">
             <h2 class="section-title">
                 <span class="emoji">📤</span>
                 ارسال تکلیف
             </h2>
-            <p style="color:#888;margin-bottom:18px;">تکلیف خود را ارسال کنید تا استاد بررسی کند 🧙‍♂️</p>
+            <p style="color:#888;margin-bottom:18px;">تکلیف خود را ثبت کنید و در لیست تکالیف ببینید 🧙‍♂️</p>
 
             <div class="homework-grid">
                 <!-- فرم ارسال -->
                 <div class="homework-form">
-                    <h3>📝 فرم ارسال تکلیف</h3>
+                    <h3>📝 فرم ثبت تکلیف</h3>
                     <form id="homeworkForm" onsubmit="submitHomework(event)">
                         <label>👤 نام و نام خانوادگی</label>
                         <input type="text" id="hwName" placeholder="مثلاً: علی کریمی" required>
@@ -1470,22 +1441,23 @@
                             <option value="ساخت اپلیکیشن">📱 ساخت اپلیکیشن</option>
                         </select>
 
-                        <label>📎 لینک پروژه یا توضیحات</label>
-                        <textarea id="hwDescription" placeholder="لینک پروژه خود را بگذارید یا توضیح دهید که چه چیزی ساخته‌اید..." required></textarea>
+                        <label>📎 توضیحات پروژه</label>
+                        <textarea id="hwDescription" placeholder="توضیح دهید که چه چیزی ساخته‌اید یا لینک پروژه را بگذارید..." required></textarea>
 
-                        <button type="submit" class="submit-btn" id="hwSubmitBtn">📤 ارسال تکلیف</button>
+                        <button type="submit" class="submit-btn" id="hwSubmitBtn">📤 ثبت تکلیف</button>
                     </form>
                     <p style="font-size:0.8rem;color:#aaa;margin-top:10px;text-align:center;">
-                        📧 تکالیف به ایمیل salehkaramirali@gmail.com ارسال می‌شود
+                        📋 تکالیف در مرورگر شما ذخیره می‌شوند (localStorage)
                     </p>
                 </div>
 
                 <!-- لیست تکالیف -->
                 <div class="homework-list">
-                    <h3>📋 لیست تکالیف ارسالی</h3>
+                    <h3>📋 لیست تکالیف شما</h3>
                     <div id="homeworkListContainer">
-                        <div class="empty-msg">📭 هنوز تکلیفی ارسال نشده است</div>
+                        <div class="empty-msg">📭 هنوز تکلیفی ثبت نشده است</div>
                     </div>
+                    <button class="reset-btn" onclick="clearHomework()" style="margin-top:15px;width:100%;padding:10px;border-color:#FF6B6B;color:#FF6B6B;">🗑️ پاک کردن همه</button>
                 </div>
             </div>
         </section>
@@ -1897,7 +1869,7 @@
         let isAnswered = false;
         let currentLesson = null;
         let homeworkList = [];
-        let outputStatus = JSON.parse(JSON.stringify(outputData));
+        let outputStatus = [];
 
         // ===== DOM ELEMENTS =====
         const questionText = document.getElementById('questionText');
@@ -1918,6 +1890,72 @@
         const totalQuestions = document.getElementById('totalQuestions');
         const outputTableBody = document.getElementById('outputTableBody');
         const homeworkListContainer = document.getElementById('homeworkListContainer');
+
+        // ===== LOAD FROM localStorage =====
+        function loadFromStorage() {
+            // بارگذاری تکالیف
+            const savedHomework = localStorage.getItem('codeyar_homework');
+            if (savedHomework) {
+                try {
+                    homeworkList = JSON.parse(savedHomework);
+                } catch (e) {
+                    homeworkList = [];
+                }
+            } else {
+                // تکالیف نمونه
+                homeworkList = [{
+                    id: 1,
+                    name: 'علی کریمی',
+                    email: 'ali@example.com',
+                    course: 'اسکرچ جادویی',
+                    description: 'بازی مار رو ساختم و سیب‌ها رو جمع می‌کنم.',
+                    date: new Date().toLocaleDateString('fa-IR'),
+                    status: 'done'
+                }, {
+                    id: 2,
+                    name: 'سارا حسینی',
+                    email: 'sara@example.com',
+                    course: 'پایتون بازیگوش',
+                    description: 'ماشین حساب کامل رو با توابع مختلف نوشتم.',
+                    date: new Date().toLocaleDateString('fa-IR'),
+                    status: 'pending'
+                }];
+                saveToStorage();
+            }
+
+            // بارگذاری وضعیت خروجی‌ها
+            const savedOutputs = localStorage.getItem('codeyar_outputs');
+            if (savedOutputs) {
+                try {
+                    outputStatus = JSON.parse(savedOutputs);
+                } catch (e) {
+                    outputStatus = JSON.parse(JSON.stringify(outputData));
+                }
+            } else {
+                outputStatus = JSON.parse(JSON.stringify(outputData));
+                saveOutputs();
+            }
+
+            // بارگذاری امتیاز
+            const savedScore = localStorage.getItem('codeyar_score');
+            if (savedScore) {
+                score = parseInt(savedScore) || 0;
+                scoreDisplay.textContent = score;
+                statScore.textContent = score;
+            }
+        }
+
+        function saveToStorage() {
+            localStorage.setItem('codeyar_homework', JSON.stringify(homeworkList));
+        }
+
+        function saveOutputs() {
+            localStorage.setItem('codeyar_outputs', JSON.stringify(outputStatus));
+        }
+
+        function saveScore() {
+            localStorage.setItem('codeyar_score', String(score));
+        }
 
         // ===== FUNCTIONS =====
 
@@ -1989,8 +2027,21 @@
 
         function resetOutputs() {
             outputStatus = JSON.parse(JSON.stringify(outputData));
+            saveOutputs();
             renderOutputs();
             showToast('🔄 خروجی‌ها بازنشانی شدند');
+        }
+
+        function exportOutputs() {
+            const data = JSON.stringify(outputStatus, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'codeyar_outputs.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('📥 خروجی‌ها با فرمت JSON ذخیره شدند');
         }
 
         // ===== HOMEWORK =====
@@ -2018,40 +2069,51 @@
             };
 
             homeworkList.push(homework);
+            saveToStorage();
             renderHomework();
-            renderOutputs();
 
-            // شبیه‌سازی ارسال به ایمیل
-            const mailtoLink =
-                `mailto:salehkaramirali@gmail.com?subject=تکلیف کدیار - ${course}&body=👤 نام: ${name}%0A📧 ایمیل: ${email}%0A📚 دوره: ${course}%0A📝 توضیحات: ${description}%0A%0A---%0Aارسال شده از کدیار 🧙‍♂️`;
+            // بروزرسانی وضعیت خروجی مربوطه
+            const courseMap = {
+                'اسکرچ جادویی': 0,
+                'ساخت بازی با اسکرچ': 1,
+                'پایتون بازیگوش': 2,
+                'ساخت وب‌سایت': 3,
+                'الگوریتم و ربات': 4,
+                'بازی‌سازی با JS': 5,
+                'هوش مصنوعی': 6,
+                'ساخت اپلیکیشن': 7
+            };
+            const idx = courseMap[course];
+            if (idx !== undefined && outputStatus[idx]) {
+                outputStatus[idx].status = 'pending';
+                saveOutputs();
+                renderOutputs();
+            }
 
-            // نمایش پیام
-            document.getElementById('hwSubmitBtn').textContent = '✅ ارسال شد!';
-            document.getElementById('hwSubmitBtn').disabled = true;
+            document.getElementById('hwSubmitBtn').textContent = '✅ ثبت شد!';
+            setTimeout(() => {
+                document.getElementById('hwSubmitBtn').textContent = '📤 ثبت تکلیف';
+            }, 2000);
 
-            showToast(`📤 تکلیف ${name} برای ${course} با موفقیت ارسال شد!`);
+            showToast(`📤 تکلیف ${name} برای ${course} با موفقیت ثبت شد!`);
 
-            // باز کردن ایمیل
-            window.open(mailtoLink, '_blank');
-
-            // پاک کردن فرم
             document.getElementById('hwName').value = '';
             document.getElementById('hwDescription').value = '';
-            document.getElementById('hwSubmitBtn').textContent = '📤 ارسال تکلیف';
-            document.getElementById('hwSubmitBtn').disabled = false;
 
-            characterMessage.textContent = `📤 تکلیف ${name} ارسال شد! 🎉`;
+            characterMessage.textContent = `📤 تکلیف ${name} ثبت شد! 🎉`;
         }
 
         function renderHomework() {
             if (homeworkList.length === 0) {
-                homeworkListContainer.innerHTML = `<div class="empty-msg">📭 هنوز تکلیفی ارسال نشده است</div>`;
+                homeworkListContainer.innerHTML = `<div class="empty-msg">📭 هنوز تکلیفی ثبت نشده است</div>`;
                 hwCount.textContent = '۰';
                 return;
             }
 
             let html = '';
-            homeworkList.forEach((hw, index) => {
+            // نمایش آخرین تکلیف در بالا
+            const sorted = [...homeworkList].reverse();
+            sorted.forEach((hw) => {
                 const statusMap = {
                     'new': '<span class="hw-status new">🆕 جدید</span>',
                     'pending': '<span class="hw-status pending">⏳ در حال بررسی</span>',
@@ -2063,11 +2125,28 @@
                         <div class="hw-detail">📚 ${hw.course} — ${hw.date}</div>
                         <div class="hw-detail" style="font-size:0.8rem;color:#666;">${hw.description.substring(0, 80)}${hw.description.length > 80 ? '...' : ''}</div>
                         <div>${statusMap[hw.status] || statusMap['new']}</div>
+                        <button onclick="deleteHomework(${hw.id})" style="border:none;background:none;color:#FF6B6B;cursor:pointer;font-size:0.75rem;margin-top:5px;">🗑️ حذف</button>
                     </div>
                 `;
             });
             homeworkListContainer.innerHTML = html;
             hwCount.textContent = homeworkList.length;
+        }
+
+        function deleteHomework(id) {
+            homeworkList = homeworkList.filter(h => h.id !== id);
+            saveToStorage();
+            renderHomework();
+            showToast('🗑️ تکلیف حذف شد');
+        }
+
+        function clearHomework() {
+            if (confirm('آیا مطمئنی می‌خوای همه تکالیف رو پاک کنی؟')) {
+                homeworkList = [];
+                saveToStorage();
+                renderHomework();
+                showToast('🗑️ همه تکالیف پاک شدند');
+            }
         }
 
         // ===== GAME FUNCTIONS =====
@@ -2137,6 +2216,7 @@
 
             scoreDisplay.textContent = score;
             statScore.textContent = score;
+            saveScore();
             nextBtn.style.display = 'inline-block';
 
             if (currentQuestionIndex === questions.length - 1) {
@@ -2170,6 +2250,7 @@
             isAnswered = false;
             scoreDisplay.textContent = '۰';
             statScore.textContent = '۰';
+            saveScore();
             loadQuestion(0);
             feedback.innerHTML = '';
             showToast('🔄 بازی دوباره شروع شد! موفق باشی!');
@@ -2186,36 +2267,11 @@
         }
 
         // ===== INIT =====
+        loadFromStorage();
         totalQuestions.textContent = questions.length;
         loadQuestion(0);
         renderOutputs();
         renderHomework();
-
-        // اضافه کردن نمونه تکلیف برای تست
-        setTimeout(() => {
-            if (homeworkList.length === 0) {
-                // تکلیف نمونه
-                homeworkList.push({
-                    id: 1,
-                    name: 'علی کریمی',
-                    email: 'ali@example.com',
-                    course: 'اسکرچ جادویی',
-                    description: 'بازی مار رو ساختم و سیب‌ها رو جمع می‌کنم. لینک پروژه: https://scratch.mit.edu/projects/123',
-                    date: '۱۴۰۴/۱۲/۱۸',
-                    status: 'done'
-                });
-                homeworkList.push({
-                    id: 2,
-                    name: 'سارا حسینی',
-                    email: 'sara@example.com',
-                    course: 'پایتون بازیگوش',
-                    description: 'ماشین حساب کامل رو با توابع مختلف نوشتم.',
-                    date: '۱۴۰۴/۱۲/۱۹',
-                    status: 'pending'
-                });
-                renderHomework();
-            }
-        }, 500);
     </script>
 
 </body>
