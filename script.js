@@ -665,3 +665,203 @@ window.loadAllClasses = loadAllClasses;
 window.loadTodayClasses = loadTodayClasses;
 window.loadStats = loadStats;
 window.loadProfile = loadProfile;
+// ============================================================
+// ===== CLASS STATUS FUNCTIONS =====
+// ============================================================
+
+function getStatusText(status) {
+    const statusMap = {
+        'waiting': '⏳ در انتظار شروع',
+        'live': '🟢 در حال برگزاری',
+        'ended': '🔴 به پایان رسیده'
+    };
+    return statusMap[status] || '⏳ در انتظار شروع';
+}
+
+function getStatusColor(status) {
+    const colorMap = {
+        'waiting': '#FFA94D',
+        'live': '#4CAF50',
+        'ended': '#FF6B6B'
+    };
+    return colorMap[status] || '#FFA94D';
+}
+
+function getStatusBadge(status) {
+    const badgeMap = {
+        'waiting': '<span class="status-badge waiting">⏳ در انتظار شروع</span>',
+        'live': '<span class="status-badge live">🟢 در حال برگزاری</span>',
+        'ended': '<span class="status-badge ended">🔴 به پایان رسیده</span>'
+    };
+    return badgeMap[status] || badgeMap['waiting'];
+}
+
+async function updateClassStatus(classId, newStatus) {
+    if (!isAdmin) {
+        showToast('⚠️ فقط مدیر می‌تواند وضعیت کلاس را تغییر دهد');
+        return;
+    }
+
+    try {
+        const response = await fetch('update-class-status.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                classId: classId,
+                class_status: newStatus
+            })
+        });
+        const data = await response.json();
+        if (data.success) {
+            showToast('✅ ' + data.message + ': ' + data.status_text);
+            loadAllClasses();
+            loadTodayClasses();
+        } else {
+            showToast('❌ ' + data.message);
+        }
+    } catch (e) {
+        showToast('❌ خطا در تغییر وضعیت کلاس');
+        console.error(e);
+    }
+}
+
+// ============================================================
+// ===== UPDATE loadTodayClasses (با وضعیت) =====
+// ============================================================
+
+// این تابع جایگزین loadTodayClasses قبلی می‌شود
+async function loadTodayClasses() {
+    try {
+        const response = await fetch('get-classes.php');
+        const data = await response.json();
+        const container = document.getElementById('todayClassesList');
+
+        if (!container) return;
+
+        if (!data.success || !data.classes || data.classes.length === 0) {
+            container.innerHTML = `<div class="loading">📭 امروز کلاسی نداریم</div>`;
+            return;
+        }
+
+        const today = new Date().toDateString();
+        const todayClasses = data.classes.filter(c => c.date === today);
+
+        if (todayClasses.length === 0) {
+            container.innerHTML = `<div class="loading">📭 امروز کلاسی نداریم</div>`;
+            return;
+        }
+
+        let html = '';
+        todayClasses.slice(0, 4).forEach(cls => {
+            const levelBadge = {
+                'مبتدی': 'beginner',
+                'متوسط': 'intermediate',
+                'پیشرفته': 'advanced',
+                'حرفه‌ای': 'pro'
+            }[cls.level] || 'beginner';
+
+            const isRegistered = cls.registered === true || cls.registered === 'true';
+            const meetLink = cls.meet_link || '#';
+            const classStatus = cls.class_status || 'waiting';
+            const statusBadge = getStatusBadge(classStatus);
+            const isLive = classStatus === 'live';
+
+            html += `
+                <div class="class-card">
+                    <span class="class-icon">${cls.icon || '📚'}</span>
+                    <h3>${cls.name}</h3>
+                    <div class="class-meta">⏰ ${cls.time}</div>
+                    <div class="class-meta">👥 ${cls.students || 0} دانش‌آموز</div>
+                    <div style="margin:6px 0;">${statusBadge}</div>
+                    <span class="class-badge ${levelBadge}">${cls.level}</span>
+                    ${isRegistered && isLive
+                        ? `<button class="class-btn meet-btn" onclick="openMeet('${meetLink}', '${cls.name}')" style="animation:pulse 2s infinite;">🎥 ورود به کلاس</button>`
+                        : isRegistered && !isLive
+                            ? `<button class="class-btn" style="background:#888;cursor:not-allowed;">⏳ منتظر شروع</button>`
+                            : `<button class="class-btn" onclick="registerClass('${cls.id}')">📝 ثبت‌نام</button>`
+                    }
+                    ${isAdmin ? `
+                        <div style="margin-top:8px;display:flex;gap:5px;flex-wrap:wrap;">
+                            <button class="class-btn" onclick="updateClassStatus('${cls.id}', 'waiting')" style="background:#FFA94D;font-size:0.65rem;padding:3px 10px;">⏳ در انتظار</button>
+                            <button class="class-btn" onclick="updateClassStatus('${cls.id}', 'live')" style="background:#4CAF50;font-size:0.65rem;padding:3px 10px;">🟢 شروع</button>
+                            <button class="class-btn" onclick="updateClassStatus('${cls.id}', 'ended')" style="background:#FF6B6B;font-size:0.65rem;padding:3px 10px;">🔴 پایان</button>
+                            <button class="class-btn" onclick="deleteClass('${cls.id}')" style="background:#6c5ce7;font-size:0.65rem;padding:3px 10px;">🗑️</button>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+    } catch (e) {
+        console.log('Error loading classes:', e);
+    }
+}
+
+// ============================================================
+// ===== UPDATE loadAllClasses (با وضعیت) =====
+// ============================================================
+
+// این تابع جایگزین loadAllClasses قبلی می‌شود
+async function loadAllClasses() {
+    try {
+        const response = await fetch('get-classes.php');
+        const data = await response.json();
+        const container = document.getElementById('allClassesList');
+
+        if (!container) return;
+
+        if (!data.success || !data.classes || data.classes.length === 0) {
+            container.innerHTML = `<div class="loading">📭 هنوز کلاسی ایجاد نشده است</div>`;
+            return;
+        }
+
+        let html = '';
+        data.classes.forEach(cls => {
+            const levelBadge = {
+                'مبتدی': 'beginner',
+                'متوسط': 'intermediate',
+                'پیشرفته': 'advanced',
+                'حرفه‌ای': 'pro'
+            }[cls.level] || 'beginner';
+
+            const isRegistered = cls.registered === true || cls.registered === 'true';
+            const meetLink = cls.meet_link || '#';
+            const classStatus = cls.class_status || 'waiting';
+            const statusBadge = getStatusBadge(classStatus);
+            const isLive = classStatus === 'live';
+
+            html += `
+                <div class="class-card" data-level="${cls.level}" data-name="${cls.name}">
+                    <span class="class-icon">${cls.icon || '📚'}</span>
+                    <h3>${cls.name}</h3>
+                    <div class="class-meta">⏰ ${cls.time}</div>
+                    <div class="class-meta">📅 ${cls.date}</div>
+                    <div class="class-meta">👥 ${cls.students || 0} دانش‌آموز</div>
+                    <div style="margin:6px 0;">${statusBadge}</div>
+                    <span class="class-badge ${levelBadge}">${cls.level}</span>
+                    ${cls.status === 'full' 
+                        ? '<span class="class-btn full">🔒 پر شده</span>'
+                        : isRegistered && isLive
+                            ? `<button class="class-btn meet-btn" onclick="openMeet('${meetLink}', '${cls.name}')" style="animation:pulse 2s infinite;">🎥 ورود به کلاس</button>`
+                            : isRegistered && !isLive
+                                ? `<button class="class-btn" style="background:#888;cursor:not-allowed;">⏳ منتظر شروع</button>`
+                                : `<button class="class-btn" onclick="registerClass('${cls.id}')">📝 ثبت‌نام</button>`
+                    }
+                    ${isAdmin ? `
+                        <div style="margin-top:8px;display:flex;gap:5px;flex-wrap:wrap;">
+                            <button class="class-btn" onclick="updateClassStatus('${cls.id}', 'waiting')" style="background:#FFA94D;font-size:0.65rem;padding:3px 10px;">⏳ در انتظار</button>
+                            <button class="class-btn" onclick="updateClassStatus('${cls.id}', 'live')" style="background:#4CAF50;font-size:0.65rem;padding:3px 10px;">🟢 شروع</button>
+                            <button class="class-btn" onclick="updateClassStatus('${cls.id}', 'ended')" style="background:#FF6B6B;font-size:0.65rem;padding:3px 10px;">🔴 پایان</button>
+                            <button class="class-btn" onclick="deleteClass('${cls.id}')" style="background:#6c5ce7;font-size:0.65rem;padding:3px 10px;">🗑️</button>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+    } catch (e) {
+        console.log('Error loading classes:', e);
+    }
+}
