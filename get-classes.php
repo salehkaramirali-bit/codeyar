@@ -4,7 +4,7 @@ header('Access-Control-Allow-Origin: *');
 
 $dataFile = 'data/classes.json';
 
-// داده‌های پیش‌فرض با لینک Google Meet
+// داده‌های پیش‌فرض با وضعیت کلاس
 $defaultClasses = [
     [
         'id' => 1,
@@ -14,7 +14,8 @@ $defaultClasses = [
         'time' => '۱۶:۰۰ - ۱۷:۳۰',
         'date' => date('Y/m/d'),
         'students' => 12,
-        'status' => 'open',
+        'status' => 'open', // open, full, cancelled
+        'class_status' => 'waiting', // waiting, live, ended
         'registered' => false,
         'meet_link' => 'https://meet.google.com/abc-defg-hij'
     ],
@@ -27,6 +28,7 @@ $defaultClasses = [
         'date' => date('Y/m/d'),
         'students' => 8,
         'status' => 'open',
+        'class_status' => 'live', // در حال برگزاری
         'registered' => false,
         'meet_link' => 'https://meet.google.com/klm-nopq-rst'
     ],
@@ -39,6 +41,7 @@ $defaultClasses = [
         'date' => date('Y/m/d', strtotime('+1 day')),
         'students' => 5,
         'status' => 'open',
+        'class_status' => 'waiting',
         'registered' => false,
         'meet_link' => 'https://meet.google.com/uvw-xyz-a12'
     ],
@@ -51,6 +54,7 @@ $defaultClasses = [
         'date' => date('Y/m/d', strtotime('+2 day')),
         'students' => 3,
         'status' => 'open',
+        'class_status' => 'ended', // به پایان رسیده
         'registered' => false,
         'meet_link' => 'https://meet.google.com/b34-cde-f56'
     ],
@@ -63,6 +67,7 @@ $defaultClasses = [
         'date' => date('Y/m/d'),
         'students' => 6,
         'status' => 'open',
+        'class_status' => 'waiting',
         'registered' => false,
         'meet_link' => 'https://meet.google.com/g78-hij-k90'
     ],
@@ -75,6 +80,7 @@ $defaultClasses = [
         'date' => date('Y/m/d', strtotime('+1 day')),
         'students' => 4,
         'status' => 'open',
+        'class_status' => 'waiting',
         'registered' => false,
         'meet_link' => 'https://meet.google.com/l12-mno-p34'
     ]
@@ -92,10 +98,6 @@ $classes = json_decode(file_get_contents($dataFile), true);
 if (!is_array($classes)) {
     $classes = $defaultClasses;
 }
-
-// اضافه کردن وضعیت ثبت‌نام برای کاربر فعلی (اگر لاگین کرده باشد)
-// برای سادگی، همه کاربران ثبت‌نام شده در نظر گرفته می‌شوند
-// در نسخه واقعی باید از session استفاده کنید
 
 echo json_encode([
     'success' => true,
