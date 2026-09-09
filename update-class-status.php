@@ -2,9 +2,19 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
+// دریافت داده‌ها
 $input = json_decode(file_get_contents('php://input'), true);
+
+// اگر داده‌ها از طریق POST ارسال شده‌اند
+if (!$input) {
+    $input = $_POST;
+}
+
 $classId = $input['classId'] ?? null;
 $classStatus = $input['class_status'] ?? null;
+
+// لاگ برای دیباگ
+error_log("update-class-status: classId=$classId, status=$classStatus");
 
 if (!$classId || !$classStatus) {
     echo json_encode(['success' => false, 'message' => 'اطلاعات کامل نیست']);
@@ -56,6 +66,6 @@ $statusMessages = [
 echo json_encode([
     'success' => true, 
     'message' => 'وضعیت کلاس تغییر کرد',
-    'status_text' => $statusMessages[$classStatus]
+    'status_text' => $statusMessages[$classStatus] ?? $classStatus
 ]);
 ?>
