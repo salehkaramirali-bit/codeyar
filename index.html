@@ -24,6 +24,7 @@
                 <a href="index.html" class="active">🏠 خانه</a>
                 <a href="classes.html">📚 کلاس‌ها</a>
                 <a href="profile.html">👤 پروفایل</a>
+                <a href="#" onclick="showAdminLogin()" style="background:rgba(255,215,0,0.2);">👑 مدیریت</a>
             </nav>
         </div>
         <div class="header-right">
@@ -60,12 +61,12 @@
                 <div class="label">📚 کلاس فعال</div>
             </div>
             <div class="stat-card">
-                <div class="number" id="studentCount">۰</div>
-                <div class="label">👨‍🎓 دانش‌آموز</div>
+                <div class="number" id="liveClassCount">۰</div>
+                <div class="label">🟢 کلاس در حال برگزاری</div>
             </div>
             <div class="stat-card">
-                <div class="number" id="todayClasses">۰</div>
-                <div class="label">📅 کلاس امروز</div>
+                <div class="number" id="studentCount">۰</div>
+                <div class="label">👨‍🎓 دانش‌آموز</div>
             </div>
             <div class="stat-card">
                 <div class="number" id="statScore">۰</div>
@@ -101,13 +102,13 @@
                 </div>
                 <div class="step-card">
                     <span class="step-number">۲</span>
-                    <h3>دریافت لینک Meet</h3>
-                    <p>لینک Google Meet کلاس را دریافت کنید</p>
+                    <h3>منتظر شروع کلاس</h3>
+                    <p>وضعیت کلاس را بررسی کنید تا شروع شود</p>
                 </div>
                 <div class="step-card">
                     <span class="step-number">۳</span>
-                    <h3>شرکت در جلسه</h3>
-                    <p>در زمان مشخص شده وارد جلسه Google Meet شوید</p>
+                    <h3>ورود به جلسه</h3>
+                    <p>وقتی کلاس شروع شد، روی دکمه ورود کلیک کنید</p>
                 </div>
                 <div class="step-card">
                     <span class="step-number">۴</span>
@@ -184,6 +185,74 @@
                 <button type="submit" class="submit-btn">ورود 🚀</button>
             </form>
             <p style="color:#888;font-size:0.8rem;margin-top:10px;">برای شروع، نام خود را وارد کنید</p>
+        </div>
+    </div>
+
+    <!-- ===== MODAL ADMIN LOGIN ===== -->
+    <div class="modal" id="adminLoginModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeAdminLogin()">&times;</span>
+            <h2>👑 ورود به پنل مدیریت</h2>
+            <form id="adminLoginForm" onsubmit="adminLogin(event)">
+                <label>🔑 رمز عبور مدیریت</label>
+                <input type="password" id="adminPassword" placeholder="رمز عبور را وارد کنید" required>
+                <button type="submit" class="submit-btn">ورود به مدیریت 🚀</button>
+            </form>
+            <p style="color:#888;font-size:0.8rem;margin-top:10px;">رمز عبور را از مدیر سایت دریافت کنید</p>
+        </div>
+    </div>
+
+    <!-- ===== MODAL ADMIN PANEL ===== -->
+    <div class="modal" id="adminPanelModal">
+        <div class="modal-content" style="max-width:700px;">
+            <span class="modal-close" onclick="closeAdminPanel()">&times;</span>
+            <h2>👑 پنل مدیریت کدیار</h2>
+            <p style="color:#888;margin-bottom:15px;">مدیریت کلاس‌ها و تکالیف</p>
+            
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+                <div class="admin-card" onclick="openAdminClasses()">
+                    <span style="font-size:2rem;">📚</span>
+                    <h4>مدیریت کلاس‌ها</h4>
+                    <p style="font-size:0.8rem;color:#888;">افزودن، ویرایش و حذف کلاس</p>
+                </div>
+                <div class="admin-card" onclick="openAdminHomework()">
+                    <span style="font-size:2rem;">📝</span>
+                    <h4>تکالیف ارسالی</h4>
+                    <p style="font-size:0.8rem;color:#888;">مشاهده و بررسی تکالیف</p>
+                </div>
+                <div class="admin-card" onclick="openAdminStudents()">
+                    <span style="font-size:2rem;">👨‍🎓</span>
+                    <h4>دانش‌آموزان</h4>
+                    <p style="font-size:0.8rem;color:#888;">لیست دانش‌آموزان ثبت‌نام شده</p>
+                </div>
+                <div class="admin-card" onclick="openAdminSettings()">
+                    <span style="font-size:2rem;">⚙️</span>
+                    <h4>تنظیمات</h4>
+                    <p style="font-size:0.8rem;color:#888;">تنظیمات سایت</p>
+                </div>
+            </div>
+            
+            <button onclick="adminLogout()" style="margin-top:20px;padding:10px 30px;background:#FF6B6B;color:white;border:none;border-radius:25px;cursor:pointer;font-weight:bold;font-family:inherit;width:100%;">🚪 خروج از مدیریت</button>
+        </div>
+    </div>
+
+    <!-- ===== MODAL JOIN CLASS ===== -->
+    <div class="modal" id="joinModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeJoinModal()">&times;</span>
+            <h2>🎥 ورود به کلاس</h2>
+            <div id="joinClassInfo">
+                <p style="font-size:1.1rem;margin:10px 0;" id="joinClassName">نام کلاس</p>
+                <p style="color:#888;" id="joinClassTime">⏰ زمان: </p>
+                <div style="background:#f0f0f0;padding:15px;border-radius:15px;margin:15px 0;">
+                    <p style="font-weight:bold;color:#6a11cb;">🔗 لینک جلسه Google Meet:</p>
+                    <a href="#" id="joinClassLink" target="_blank" style="color:#2575fc;word-break:break-all;font-size:1rem;">لینک</a>
+                </div>
+                <div style="display:flex;gap:10px;">
+                    <a href="#" id="joinClassBtn" target="_blank" class="submit-btn" style="text-align:center;text-decoration:none;flex:1;">🎥 ورود به جلسه</a>
+                    <button onclick="closeJoinModal()" class="reset-btn" style="flex:0.5;">بستن</button>
+                </div>
+            </div>
         </div>
     </div>
 
