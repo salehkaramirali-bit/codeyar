@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>کدیار - آموزش برنامه‌نویسی برای کودکان</title>
-    <meta name="description" content="کدیار - یار برنامه‌نویسی کودکان. آموزش اسکرچ، پایتون، وب‌سایت، بازی‌سازی و هوش مصنوعی">
+    <title>کدیار - آموزش برنامه‌نویسی با کلاس آنلاین</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
 </head>
@@ -19,21 +18,23 @@
             <h1>
                 <span>🧙‍♂️</span>
                 کدیار
-                <span class="logo-sub">یار برنامه‌نویسی کودکان</span>
+                <span class="logo-sub">آموزش آنلاین برنامه‌نویسی</span>
             </h1>
             <nav class="nav-links">
-                <a href="#" class="active" onclick="showHome()">🏠 خانه</a>
-                <a href="#" onclick="document.getElementById('outputSection').scrollIntoView({behavior:'smooth'})">📊 خروجی‌ها</a>
-                <a href="#" onclick="document.getElementById('homeworkSection').scrollIntoView({behavior:'smooth'})">📤 تکلیف</a>
-                <a href="#" onclick="document.getElementById('gameSection').scrollIntoView({behavior:'smooth'})">🎯 بازی</a>
-                <a href="#" onclick="document.getElementById('aboutSection').scrollIntoView({behavior:'smooth'})">📖 درباره</a>
+                <a href="index.html" class="active">🏠 خانه</a>
+                <a href="classes.html">📚 کلاس‌ها</a>
+                <a href="class-room.html">💬 کلاس زنده</a>
+                <a href="profile.html">👤 پروفایل</a>
             </nav>
         </div>
         <div class="header-right">
-            <button class="back-btn" id="backBtn" onclick="showHome()">🏠 بازگشت</button>
             <div class="score-box">
                 <span class="star">⭐</span>
                 امتیاز: <span id="scoreDisplay">۰</span>
+            </div>
+            <div class="user-box" id="userBox">
+                <span id="userNameDisplay">کاربر</span>
+                <button class="login-btn" onclick="toggleLogin()">ورود</button>
             </div>
         </div>
     </header>
@@ -44,11 +45,10 @@
         <section class="hero">
             <div class="hero-text">
                 <h2>🚀 به کدیار خوش اومدی!</h2>
-                <p>یاد بگیر، بازی کن، تکلیف بفرست و برنامه‌نویس شو! 🧙‍♂️</p>
-                <p style="font-size:0.85rem;opacity:0.8;margin-top:8px;">✨ بیش از ۱۰۰۰ کودک در حال یادگیری با کدیار</p>
+                <p>یادگیری برنامه‌نویسی با <strong>کلاس‌های آنلاین زنده</strong> و بازی 🧙‍♂️</p>
                 <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap;">
-                    <a href="#lessonsSection" class="hero-btn">📚 شروع یادگیری</a>
-                    <a href="#gameSection" class="hero-btn secondary">🎯 بازی کن</a>
+                    <a href="classes.html" class="hero-btn">📚 کلاس‌ها</a>
+                    <a href="class-room.html" class="hero-btn secondary">💬 کلاس زنده</a>
                 </div>
             </div>
             <div class="hero-emoji">🧙‍♂️</div>
@@ -57,261 +57,65 @@
         <!-- ===== STATS ===== -->
         <div class="stats">
             <div class="stat-card">
-                <div class="number">۸</div>
-                <div class="label">📚 دوره آموزشی</div>
+                <div class="number" id="classCount">۰</div>
+                <div class="label">📚 کلاس فعال</div>
             </div>
             <div class="stat-card">
-                <div class="number">۵۰+</div>
-                <div class="label">📝 تمرین و پروژه</div>
-            </div>
-            <div class="stat-card">
-                <div class="number" id="studentCount">۱۰۰۰+</div>
+                <div class="number" id="studentCount">۰</div>
                 <div class="label">👨‍🎓 دانش‌آموز</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="todayClasses">۰</div>
+                <div class="label">📅 کلاس امروز</div>
             </div>
             <div class="stat-card">
                 <div class="number" id="statScore">۰</div>
                 <div class="label">⭐ امتیاز شما</div>
             </div>
-            <div class="stat-card">
-                <div class="number" id="hwCount">۰</div>
-                <div class="label">📤 تکالیف ارسالی</div>
-            </div>
         </div>
 
-        <!-- ===== LESSONS SECTION ===== -->
-        <section class="lessons-section" id="lessonsSection">
+        <!-- ===== CLASSES PREVIEW ===== -->
+        <section class="classes-preview">
             <h2 class="section-title">
                 <span class="emoji">📚</span>
-                دوره‌های آموزشی کدیار
+                کلاس‌های امروز
             </h2>
-            <div class="lessons-grid" id="homeSection">
-
-                <div class="lesson-card" onclick="showLesson('scratch')">
-                    <span class="icon">🧩</span>
-                    <h3>اسکرچ جادویی</h3>
-                    <p>برنامه‌نویسی با بلوک‌های رنگی</p>
-                    <span class="badge">مبتدی</span>
-                    <div class="duration">⏱️ ۴ جلسه</div>
-                </div>
-
-                <div class="lesson-card" onclick="showLesson('scratch2')">
-                    <span class="icon">🎮</span>
-                    <h3>ساخت بازی با اسکرچ</h3>
-                    <p>مار، ماز و مسابقه</p>
-                    <span class="badge">متوسط</span>
-                    <div class="duration">⏱️ ۶ جلسه</div>
-                </div>
-
-                <div class="lesson-card" onclick="showLesson('python')">
-                    <span class="icon">🐍</span>
-                    <h3>پایتون بازیگوش</h3>
-                    <p>کدنویسی متنی با پایتون</p>
-                    <span class="badge">متوسط</span>
-                    <div class="duration">⏱️ ۸ جلسه</div>
-                </div>
-
-                <div class="lesson-card" onclick="showLesson('web')">
-                    <span class="icon">🌐</span>
-                    <h3>ساخت وب‌سایت</h3>
-                    <p>HTML، CSS و JavaScript</p>
-                    <span class="badge">متوسط</span>
-                    <div class="duration">⏱️ ۶ جلسه</div>
-                </div>
-
-                <div class="lesson-card" onclick="showLesson('algorithm')">
-                    <span class="icon">🤖</span>
-                    <h3>الگوریتم و ربات</h3>
-                    <p>منطق و حل مسئله</p>
-                    <span class="badge">پیشرفته</span>
-                    <div class="duration">⏱️ ۵ جلسه</div>
-                </div>
-
-                <div class="lesson-card" onclick="showLesson('gamejs')">
-                    <span class="icon">🕹️</span>
-                    <h3>بازی‌سازی با JS</h3>
-                    <p>بازی‌های تعاملی</p>
-                    <span class="badge">پیشرفته</span>
-                    <div class="duration">⏱️ ۷ جلسه</div>
-                </div>
-
-                <div class="lesson-card" onclick="showLesson('ai')">
-                    <span class="icon">💡</span>
-                    <h3>هوش مصنوعی</h3>
-                    <p>یادگیری ماشین و چت‌بات</p>
-                    <span class="badge">حرفه‌ای</span>
-                    <div class="duration">⏱️ ۸ جلسه</div>
-                </div>
-
-                <div class="lesson-card" onclick="showLesson('app')">
-                    <span class="icon">📱</span>
-                    <h3>ساخت اپلیکیشن</h3>
-                    <p>اپلیکیشن موبایل با JS</p>
-                    <span class="badge">حرفه‌ای</span>
-                    <div class="duration">⏱️ ۶ جلسه</div>
-                </div>
-
+            <div class="classes-grid" id="todayClassesList">
+                <!-- توسط JS پر می‌شود -->
+                <div class="loading">⏳ در حال بارگذاری...</div>
+            </div>
+            <div style="text-align:center;margin-top:20px;">
+                <a href="classes.html" class="hero-btn" style="background:linear-gradient(135deg,#6a11cb,#2575fc);color:white;border:none;">مشاهده همه کلاس‌ها</a>
             </div>
         </section>
 
-        <!-- ===== LESSON DETAIL ===== -->
-        <div class="lesson-detail" id="lessonDetail">
-            <div class="detail-header">
-                <span class="big-icon" id="detailIcon">🧩</span>
-                <div>
-                    <h2 id="detailTitle">اسکرچ جادویی</h2>
-                    <span class="level-tag" id="detailLevel" style="background:#FF6B6B;">مبتدی</span>
-                    <div class="meta-info">
-                        <span>⏱️ <span id="detailDuration">۴ جلسه</span></span>
-                        <span>📝 <span id="detailExercises">۸ تمرین</span></span>
-                    </div>
-                </div>
-            </div>
-            <div class="detail-content" id="detailContent">
-                <!-- محتوا توسط جاوااسکریپت پر میشه -->
-            </div>
-        </div>
-
-        <!-- ===== OUTPUT SECTION ===== -->
-        <section class="output-section" id="outputSection">
-            <div class="output-header">
-                <h2 class="section-title" style="margin-bottom:0;">
-                    <span class="emoji">📊</span>
-                    خروجی همه آموزش‌ها
-                </h2>
-                <div style="display:flex;gap:10px;flex-wrap:wrap;">
-                    <button class="reset-btn" onclick="resetOutputs()" style="padding:8px 20px;font-size:0.85rem;">🔄 بازنشانی</button>
-                    <button class="reset-btn" onclick="exportOutputs()" style="padding:8px 20px;font-size:0.85rem;border-color:#6a11cb;color:#6a11cb;">📥 خروجی JSON</button>
-                </div>
-            </div>
-            <div class="output-table-wrap">
-                <table class="output-table" id="outputTable">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>دوره</th>
-                            <th>سطح</th>
-                            <th>خروجی / پروژه</th>
-                            <th>کد نمونه</th>
-                            <th>وضعیت</th>
-                        </tr>
-                    </thead>
-                    <tbody id="outputTableBody">
-                        <!-- توسط جاوااسکریپت پر می‌شود -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- ===== HOMEWORK SECTION ===== -->
-        <section class="homework-section" id="homeworkSection">
+        <!-- ===== FEATURES ===== -->
+        <section class="features-section">
             <h2 class="section-title">
-                <span class="emoji">📤</span>
-                ارسال تکلیف
+                <span class="emoji">✨</span>
+                امکانات کدیار
             </h2>
-            <p style="color:#888;margin-bottom:18px;">تکلیف خود را ارسال کنید تا استاد بررسی کند 🧙‍♂️</p>
-
-            <div class="homework-grid">
-                <!-- فرم ارسال -->
-                <div class="homework-form">
-                    <h3>📝 فرم ارسال تکلیف</h3>
-                    <form id="homeworkForm" method="POST" action="submit-homework.php">
-                        <div id="formStatus" style="display:none;padding:10px;border-radius:10px;margin-bottom:15px;"></div>
-
-                        <label>👤 نام و نام خانوادگی</label>
-                        <input type="text" id="hwName" name="hwName" placeholder="مثلاً: علی کریمی" required>
-
-                        <label>📧 ایمیل</label>
-                        <input type="email" id="hwEmail" name="hwEmail" placeholder="example@gmail.com" value="salehkaramirali@gmail.com" required>
-
-                        <label>📚 دوره</label>
-                        <select id="hwCourse" name="hwCourse" required>
-                            <option value="اسکرچ جادویی">🧩 اسکرچ جادویی</option>
-                            <option value="ساخت بازی با اسکرچ">🎮 ساخت بازی با اسکرچ</option>
-                            <option value="پایتون بازیگوش">🐍 پایتون بازیگوش</option>
-                            <option value="ساخت وب‌سایت">🌐 ساخت وب‌سایت</option>
-                            <option value="الگوریتم و ربات">🤖 الگوریتم و ربات</option>
-                            <option value="بازی‌سازی با JS">🕹️ بازی‌سازی با JS</option>
-                            <option value="هوش مصنوعی">💡 هوش مصنوعی</option>
-                            <option value="ساخت اپلیکیشن">📱 ساخت اپلیکیشن</option>
-                        </select>
-
-                        <label>📎 توضیحات پروژه</label>
-                        <textarea id="hwDescription" name="hwDescription" placeholder="لینک پروژه یا توضیح کامل..." required></textarea>
-
-                        <button type="submit" class="submit-btn" id="hwSubmitBtn">📤 ارسال تکلیف</button>
-                    </form>
-                    <p style="font-size:0.8rem;color:#aaa;margin-top:10px;text-align:center;">
-                        📧 تکالیف به ایمیل salehkaramirali@gmail.com ارسال می‌شود
-                    </p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🎥</span>
+                    <h3>کلاس زنده</h3>
+                    <p>اتاق گفتگوی زنده با مدرس و سایر دانش‌آموزان</p>
                 </div>
-
-                <!-- لیست تکالیف -->
-                <div class="homework-list">
-                    <h3>📋 لیست تکالیف ارسالی</h3>
-                    <div id="homeworkListContainer">
-                        <div class="empty-msg">📭 در حال بارگذاری...</div>
-                    </div>
-                    <button class="reset-btn" onclick="clearHomework()" style="margin-top:15px;width:100%;padding:10px;border-color:#FF6B6B;color:#FF6B6B;">🗑️ پاک کردن همه</button>
+                <div class="feature-card">
+                    <span class="feature-icon">📝</span>
+                    <h3>ارسال تکلیف</h3>
+                    <p>تکالیف خود را ارسال کنید و بازخورد بگیرید</p>
                 </div>
-            </div>
-        </section>
-
-        <!-- ===== GAME SECTION ===== -->
-        <section class="game-section" id="gameSection">
-            <div class="game-header">
-                <div>
-                    <h2>🎯 بازی کدنویسی کدیار</h2>
-                    <p class="subtitle">به سوالات پاسخ بده و امتیاز جمع کن! 🏆</p>
+                <div class="feature-card">
+                    <span class="feature-icon">📊</span>
+                    <h3>پیشرفت</h3>
+                    <p>وضعیت پیشرفت خود را در هر دوره مشاهده کنید</p>
                 </div>
-                <div style="font-size:1.1rem;color:#888;">
-                    سوال <span id="questionNumber">۱</span> از <span id="totalQuestions">۱۰</span>
+                <div class="feature-card">
+                    <span class="feature-icon">🏆</span>
+                    <h3>امتیاز و جایزه</h3>
+                    <p>با شرکت در کلاس‌ها امتیاز جمع کنید</p>
                 </div>
-            </div>
-
-            <div class="game-area">
-                <div class="game-progress">
-                    <div class="progress-bar" id="progressBar"></div>
-                </div>
-
-                <div class="game-question" id="questionText">۲ + ۳ = ؟</div>
-
-                <div class="game-options" id="optionsContainer">
-                    <button onclick="checkAnswer(0)">۵</button>
-                    <button onclick="checkAnswer(1)">۶</button>
-                    <button onclick="checkAnswer(2)">۴</button>
-                    <button onclick="checkAnswer(3)">۷</button>
-                </div>
-
-                <div class="game-feedback" id="feedback"></div>
-
-                <div class="game-actions">
-                    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">سوال بعدی ➜</button>
-                    <button class="reset-btn" onclick="resetGame()">🔄 دوباره</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== ABOUT SECTION ===== -->
-        <section class="about-section" id="aboutSection">
-            <h2 class="section-title">
-                <span class="emoji">📖</span>
-                درباره کدیار
-            </h2>
-            <div class="about-content">
-                <p><strong>کدیار</strong> یک پلتفرم آموزشی برای کودکان و نوجوانان است که با هدف آموزش برنامه‌نویسی به زبان ساده و جذاب طراحی شده است.</p>
-                <p>🧙‍♂️ <strong>چرا کدیار؟</strong></p>
-                <ul>
-                    <li>✅ آموزش با بازی و سرگرمی</li>
-                    <li>✅ دوره‌های متنوع از مبتدی تا حرفه‌ای</li>
-                    <li>✅ پشتیبانی و ارسال تکلیف</li>
-                    <li>✅ مناسب برای سنین ۸ تا ۱۸ سال</li>
-                </ul>
-                <p style="margin-top:15px;">
-                    <strong>📧 ارتباط با ما:</strong> salehkaramirali@gmail.com
-                </p>
-                <p style="font-size:0.85rem;color:#888;">
-                    کدیار — همراه همیشگی کودکان در مسیر برنامه‌نویسی 🚀
-                </p>
             </div>
         </section>
 
@@ -321,7 +125,7 @@
                 🧙‍♂️
             </div>
             <div class="character-message" id="characterMessage">
-                سلام! بیا یاد بگیریم 🚀
+                سلام! آماده‌ای یاد بگیری؟ 🚀
             </div>
         </div>
 
@@ -331,14 +135,28 @@
     <div class="container">
         <footer class="footer">
             <h3 style="color:#6a11cb;font-size:1.3rem;">🧙‍♂️ کدیار</h3>
-            <p>یار برنامه‌نویسی کودکان — یادگیری با بازی و سرگرمی</p>
+            <p>آموزش آنلاین برنامه‌نویسی برای کودکان و نوجوانان</p>
             <div class="footer-links">
-                <a href="#" onclick="showToast('📖 درباره ما: کدیار در سال ۲۰۲۴ شروع به کار کرد')">درباره ما</a>
+                <a href="#" onclick="showToast('📖 درباره کدیار')">درباره ما</a>
                 <a href="#" onclick="showToast('📧 ایمیل: salehkaramirali@gmail.com')">تماس با ما</a>
-                <a href="#" onclick="showToast('📱 ما را در شبکه‌های اجتماعی دنبال کنید')">شبکه‌های اجتماعی</a>
+                <a href="#" onclick="showToast('📱 شبکه‌های اجتماعی')">شبکه‌های اجتماعی</a>
             </div>
             <p style="font-size:0.8rem;margin-top:10px;">© ۲۰۲۶ کدیار — همه حقوق محفوظ است</p>
         </footer>
+    </div>
+
+    <!-- ===== MODAL LOGIN ===== -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="toggleLogin()">&times;</span>
+            <h2>👤 ورود به کدیار</h2>
+            <form id="loginForm" onsubmit="loginUser(event)">
+                <label>👤 نام کاربری</label>
+                <input type="text" id="loginName" placeholder="نام خود را وارد کنید" required>
+                <button type="submit" class="submit-btn">ورود 🚀</button>
+            </form>
+            <p style="color:#888;font-size:0.8rem;margin-top:10px;">برای شروع، نام خود را وارد کنید</p>
+        </div>
     </div>
 
     <script src="script.js"></script>
