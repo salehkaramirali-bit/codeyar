@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پروفایل کدیار</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="toast" id="toast"></div>
+
+    <header class="header">
+        <div class="header-left">
+            <h1>
+                <span>🧙‍♂️</span>
+                کدیار
+                <span class="logo-sub">پروفایل</span>
+            </h1>
+            <nav class="nav-links">
+                <a href="index.html">🏠 خانه</a>
+                <a href="classes.html">📚 کلاس‌ها</a>
+                <a href="class-room.html">💬 کلاس زنده</a>
+                <a href="profile.html" class="active">👤 پروفایل</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="score-box">
+                <span class="star">⭐</span>
+                امتیاز: <span id="scoreDisplay">۰</span>
+            </div>
+            <div class="user-box">
+                <span id="userNameDisplay">کاربر</span>
+                <button class="login-btn" onclick="toggleLogin()">ورود</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <section class="page-header">
+            <h2>👤 پروفایل من</h2>
+            <p>وضعیت یادگیری و پیشرفت شما</p>
+        </section>
+
+        <div class="profile-container">
+            <div class="profile-card">
+                <div class="profile-avatar">🧙‍♂️</div>
+                <h3 id="profileName">کاربر کدیار</h3>
+                <p id="profileEmail">salehkaramirali@gmail.com</p>
+                <div class="profile-stats">
+                    <div class="profile-stat">
+                        <span class="profile-stat-number" id="profileClasses">۰</span>
+                        <span class="profile-stat-label">کلاس شرکت کرده</span>
+                    </div>
+                    <div class="profile-stat">
+                        <span class="profile-stat-number" id="profileScore">۰</span>
+                        <span class="profile-stat-label">امتیاز</span>
+                    </div>
+                    <div class="profile-stat">
+                        <span class="profile-stat-number" id="profileHomework">۰</span>
+                        <span class="profile-stat-label">تکلیف ارسال شده</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-progress">
+                <h3>📊 پیشرفت دوره‌ها</h3>
+                <div id="progressList">
+                    <!-- توسط JS پر می‌شود -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="toggleLogin()">&times;</span>
+            <h2>👤 ورود به کدیار</h2>
+            <form id="loginForm" onsubmit="loginUser(event)">
+                <label>👤 نام کاربری</label>
+                <input type="text" id="loginName" placeholder="نام خود را وارد کنید" required>
+                <button type="submit" class="submit-btn">ورود 🚀</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
